@@ -1,11 +1,12 @@
 #region Usings
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Eshva.DockerCompose.Commands.DownProject;
+using Eshva.DockerCompose.Commands.UpProject;
 using FluentAssertions;
 using Microsoft.Extensions.FileProviders;
 using StackExchange.Redis;
@@ -39,7 +40,7 @@ namespace Eshva.Hodgepodge.LearningRedis
         {
             CreateTempFolder();
             SaveConfigsToTempFolder();
-            UpDockerComposeFile("learning-redis.yaml");
+            await UpDockerComposeFile("learning-redis.yaml");
             await GetRedisDatabase();
         }
 
@@ -85,33 +86,18 @@ namespace Eshva.Hodgepodge.LearningRedis
             }
         }
 
-        private void UpDockerComposeFile(string dockerComposeFileName)
+        private async Task UpDockerComposeFile(string dockerComposeFileName)
         {
             _fullDockerComposeFilePath = Path.Combine(_configurationTempFolder, dockerComposeFileName);
-            var process = ExecuteDockerCompose($"-f {_fullDockerComposeFilePath} up -d");
-            var output = process.StandardOutput;
-            var error = process.StandardError;
+            var upProjectCommand = new UpProjectCommand(_fullDockerComposeFilePath);
+            await upProjectCommand.Execute(TimeSpan.FromSeconds(10));
         }
 
-        private Process ExecuteDockerCompose(string arguments)
+        private async Task RedisDown()
         {
-            var processStartInfo = new ProcessStartInfo("docker-compose", arguments)
-                                   {
-                                       RedirectStandardOutput = true,
-                                       RedirectStandardError = true,
-                                       CreateNoWindow = false,
-                                       UseShellExecute = false
-                                   };
-            return Process.Start(processStartInfo);
-        }
-
-        private void RedisDown()
-        {
-            _redis.Dispose();
-            var process = ExecuteDockerCompose($"-f {_fullDockerComposeFilePath} down");
-            process.WaitForExit();
-            var output = process.StandardOutput;
-            var error = process.StandardError;
+            _redis?.Dispose();
+            var downProjectCommand = new DownProjectCommand(_fullDockerComposeFilePath);
+            await downProjectCommand.Execute();
         }
 
         private string _configurationTempFolder;
