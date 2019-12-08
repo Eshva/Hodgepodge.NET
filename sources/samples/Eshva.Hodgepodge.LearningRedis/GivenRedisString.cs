@@ -1,11 +1,11 @@
 #region Usings
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Eshva.DockerCompose.Commands.DownProject;
 using Eshva.DockerCompose.Commands.UpProject;
 using FluentAssertions;
 using Microsoft.Extensions.FileProviders;
@@ -93,25 +93,11 @@ namespace Eshva.Hodgepodge.LearningRedis
             await upProjectCommand.Execute(TimeSpan.FromSeconds(10));
         }
 
-        private Process ExecuteDockerCompose(string arguments)
-        {
-            var processStartInfo = new ProcessStartInfo("docker-compose", arguments)
-                                   {
-                                       RedirectStandardOutput = true,
-                                       RedirectStandardError = true,
-                                       CreateNoWindow = false,
-                                       UseShellExecute = false
-                                   };
-            return Process.Start(processStartInfo);
-        }
-
-        private void RedisDown()
+        private async Task RedisDown()
         {
             _redis?.Dispose();
-            var process = ExecuteDockerCompose($"-f {_fullDockerComposeFilePath} down");
-            process.WaitForExit();
-            var output = process.StandardOutput;
-            var error = process.StandardError;
+            var downProjectCommand = new DownProjectCommand(_fullDockerComposeFilePath);
+            await downProjectCommand.Execute();
         }
 
         private string _configurationTempFolder;
