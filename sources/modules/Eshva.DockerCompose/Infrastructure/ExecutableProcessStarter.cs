@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using Eshva.DockerCompose.Exceptions;
 
@@ -16,6 +17,10 @@ namespace Eshva.DockerCompose.Infrastructure
         {
             _executableName = executableName;
         }
+
+        public TextReader StandardOutput { get; private set; } = new StringReader(string.Empty);
+
+        public TextReader StandardError { get; private set; } = new StringReader(string.Empty);
 
         public Task<int> Start(string arguments, TimeSpan executionTimeout)
         {
@@ -53,6 +58,8 @@ namespace Eshva.DockerCompose.Infrastructure
             }
             finally
             {
+                StandardOutput = process.StandardOutput;
+                StandardError = process.StandardError;
                 process.Dispose();
             }
         }

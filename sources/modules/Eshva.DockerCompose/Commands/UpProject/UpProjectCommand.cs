@@ -25,7 +25,7 @@ namespace Eshva.DockerCompose.Commands.UpProject
         protected override IReadOnlyCollection<string> PrepareArguments()
         {
             var arguments = new List<string> { "up" };
-            arguments.AddConditionally(IsDetached, "--detached");
+            arguments.AddConditionally(IsDetached, "--detach");
             return arguments.AsReadOnly();
         }
     }

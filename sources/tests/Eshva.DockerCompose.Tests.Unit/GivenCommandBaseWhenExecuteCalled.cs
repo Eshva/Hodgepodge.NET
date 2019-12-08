@@ -44,7 +44,7 @@ namespace Eshva.DockerCompose.Tests.Unit
             var starterMock = new Mock<IProcessStarter>();
             starterMock.Setup(starter => starter.Start("--version", It.IsAny<TimeSpan>()))
                        .Returns(Task.FromResult(0));
-            var command = new VersionCommand(starterMock.Object, string.Empty);
+            var command = new VersionCommand(starterMock.Object);
             await command.Execute();
             starterMock.Verify(starter => starter.Start("--version", It.IsAny<TimeSpan>()), Times.Once());
         }

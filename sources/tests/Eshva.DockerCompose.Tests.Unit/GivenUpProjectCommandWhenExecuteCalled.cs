@@ -20,7 +20,7 @@ namespace Eshva.DockerCompose.Tests.Unit
         {
             var starterMock = new Mock<IProcessStarter>();
             Expression<Func<string, bool>> argumentsValidator =
-                arguments => arguments.Equals("-f \"project.yaml\" up --detached", StringComparison.OrdinalIgnoreCase);
+                arguments => arguments.Equals("-f \"project.yaml\" up --detach", StringComparison.OrdinalIgnoreCase);
             starterMock.Setup(starter => starter.Start(It.Is(argumentsValidator), It.IsAny<TimeSpan>()))
                        .Returns(Task.FromResult(0));
             var command = new UpProjectCommand(starterMock.Object, "project.yaml")
