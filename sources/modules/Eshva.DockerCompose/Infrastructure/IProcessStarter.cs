@@ -14,7 +14,7 @@ namespace Eshva.DockerCompose.Infrastructure
         TextReader StandardOutput { get; }
 
         TextReader StandardError { get; }
-            
+
         Task<int> Start(string arguments, TimeSpan executionTimeout);
     }
 }
