@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Eshva.DockerCompose.Commands;
 using Eshva.DockerCompose.Exceptions;
 using Eshva.DockerCompose.Infrastructure;
 using FluentAssertions;
@@ -14,7 +13,7 @@ using Xunit;
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit
+namespace Eshva.DockerCompose.Tests.Unit.CommandBase
 {
     public sealed class GivenCommandBaseWhenExecuteCalled
     {
@@ -76,13 +75,13 @@ namespace Eshva.DockerCompose.Tests.Unit
                 Times.Once());
         }
 
-        private sealed class BadCommand : CommandBase
+        private sealed class BadCommand : Commands.CommandBase
         {
             protected override IReadOnlyCollection<string> PrepareArguments() =>
                 new List<string>(new[] { "fook", "-it" }).AsReadOnly();
         }
 
-        private sealed class CommandWithProjects : CommandBase
+        private sealed class CommandWithProjects : Commands.CommandBase
         {
             public CommandWithProjects(IProcessStarter processStarter, params string[] projectFileNames)
                 : base(processStarter, projectFileNames)
@@ -92,7 +91,7 @@ namespace Eshva.DockerCompose.Tests.Unit
             protected override IReadOnlyCollection<string> PrepareArguments() => new List<string>().AsReadOnly();
         }
 
-        private sealed class VersionCommand : CommandBase
+        private sealed class VersionCommand : Commands.CommandBase
         {
             public VersionCommand(IProcessStarter processStarter, params string[] projectFileNames)
                 : base(processStarter, projectFileNames)
