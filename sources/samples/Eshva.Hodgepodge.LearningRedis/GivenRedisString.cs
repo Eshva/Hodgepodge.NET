@@ -70,13 +70,13 @@ namespace Eshva.Hodgepodge.LearningRedis
         private void SaveConfigsToTempFolder()
         {
             // TODO: .NET converts dashes to underscores in path but not all seams like. I should do something about it.
-            SaveEmbeddedFilesToTempFolder("docker_configs/learning-redis.yaml");
+            SaveEmbeddedFilesToTempFolder("docker-configs/learning-redis.yaml");
         }
 
         private void SaveEmbeddedFilesToTempFolder(params string[] embeddedFileNames)
         {
             var executingAssembly = Assembly.GetExecutingAssembly();
-            var embeddedFileProvider = new EmbeddedFileProvider(executingAssembly);
+            var embeddedFileProvider = new ManifestEmbeddedFileProvider(executingAssembly);
             var fileInfos = embeddedFileProvider.GetDirectoryContents("/").ToArray();
             foreach (var embeddedFileName in embeddedFileNames)
             {
