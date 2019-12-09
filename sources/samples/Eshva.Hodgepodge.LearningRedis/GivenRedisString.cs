@@ -17,23 +17,28 @@ using Xunit;
 
 namespace Eshva.Hodgepodge.LearningRedis
 {
-    public sealed class GivenRedisString : IDisposable
+    public sealed class GivenRedisString : IAsyncLifetime
     {
         [Fact]
         public async Task ShouldWriteString()
         {
-            await RedisUp();
             var database = _redis.GetDatabase();
             var value = Guid.NewGuid().ToString("N");
             const string Key = "eshva-hodgepodge:test1";
-            database.StringSet(Key, value);
+            await database.StringSetAsync(Key, value);
 
-            database.StringGet(Key).Should().Be(value);
+            var readValue = await database.StringGetAsync(Key);
+            readValue.Should().Be(readValue);
         }
 
-        public void Dispose()
+        Task IAsyncLifetime.InitializeAsync()
         {
-            RedisDown();
+            return RedisUp();
+        }
+
+        Task IAsyncLifetime.DisposeAsync()
+        {
+            return RedisDown();
         }
 
         private async Task RedisUp()
