@@ -11,12 +11,13 @@ using Xunit;
 
 namespace Eshva.Hodgepodge.LearningRedis
 {
-    [Collection("Learning Redis")]
+    [Collection(LearningRedisTestCollection.CollectionName)]
     public sealed class GivenRedisString
     {
-        public GivenRedisString(LearningRedisFixture fixture)
+        public GivenRedisString(LearningRedisTestCollectionFixture collectionFixture)
         {
-            Redis = fixture.Redis;
+            Redis = collectionFixture.Redis;
+            Server = collectionFixture.Server;
         }
 
         [Fact]
@@ -32,5 +33,7 @@ namespace Eshva.Hodgepodge.LearningRedis
         }
 
         private ConnectionMultiplexer Redis { get; }
+
+        private IServer Server { get; }
     }
 }

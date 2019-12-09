@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\modules\Eshva.DockerCompose\Eshva.DockerCompose.csproj" />
+    <ProjectReference Include="..\..\modules\Eshva.Hodgepodge\Eshva.Hodgepodge.csproj" />
   </ItemGroup>
 
 </Project>
