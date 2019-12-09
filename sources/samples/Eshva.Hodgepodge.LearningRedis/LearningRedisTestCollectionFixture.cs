@@ -53,7 +53,7 @@ namespace Eshva.Hodgepodge.LearningRedis
                 }
             }
 
-            throw new TimeoutException(
+            throw new TaskCanceledException(
                 $"Unable to connect to Redis-server at {ServerHost}:{ServerPort} during {GetPreparationTimeout():g}.");
         }
 
