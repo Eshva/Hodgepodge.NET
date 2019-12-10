@@ -8,15 +8,23 @@ using Eshva.DockerCompose.Infrastructure;
 
 namespace Eshva.DockerCompose.Commands.DownProject
 {
-    public class DownProjectCommand : CommandBase
+    public sealed class DownProjectCommand : CommandBase
     {
-        public DownProjectCommand(IProcessStarter processStarter, params string[] projectFileNames)
-            : base(processStarter, projectFileNames)
+        // TODO: Private constructors and a builder.
+        public DownProjectCommand(IProcessStarter starter, params string[] files) : base(starter, files)
         {
         }
 
-        public DownProjectCommand(params string[] projectFileNames) : base(projectFileNames)
+        public DownProjectCommand(params string[] files) : base(files)
         {
+        }
+
+        protected override string Command => "down";
+
+        protected internal override string[] Verify()
+        {
+            // TODO: Verification
+            return new string[] { };
         }
 
         protected override IReadOnlyCollection<string> PrepareArguments()

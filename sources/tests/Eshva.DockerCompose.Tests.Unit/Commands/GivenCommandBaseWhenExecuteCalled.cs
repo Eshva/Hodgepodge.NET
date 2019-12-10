@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Eshva.DockerCompose.Commands;
 using Eshva.DockerCompose.Exceptions;
 using Eshva.DockerCompose.Infrastructure;
 using FluentAssertions;
@@ -13,7 +14,7 @@ using Xunit;
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit.CommandBase
+namespace Eshva.DockerCompose.Tests.Unit.Commands
 {
     public sealed class GivenCommandBaseWhenExecuteCalled
     {
@@ -75,27 +76,48 @@ namespace Eshva.DockerCompose.Tests.Unit.CommandBase
                 Times.Once());
         }
 
-        private sealed class BadCommand : Commands.CommandBase
+        private sealed class BadCommand : CommandBase
         {
+            protected override string Command => "fook";
+
+            protected internal override string[] Verify()
+            {
+                return new string[] { };
+            }
+
             protected override IReadOnlyCollection<string> PrepareArguments() =>
                 new List<string>(new[] { "fook", "-it" }).AsReadOnly();
         }
 
-        private sealed class CommandWithProjects : Commands.CommandBase
+        private sealed class CommandWithProjects : CommandBase
         {
-            public CommandWithProjects(IProcessStarter processStarter, params string[] projectFileNames)
-                : base(processStarter, projectFileNames)
+            public CommandWithProjects(IProcessStarter starter, params string[] files)
+                : base(starter, files)
             {
+            }
+
+            protected override string Command => "some";
+
+            protected internal override string[] Verify()
+            {
+                return new string[] { };
             }
 
             protected override IReadOnlyCollection<string> PrepareArguments() => new List<string>().AsReadOnly();
         }
 
-        private sealed class VersionCommand : Commands.CommandBase
+        private sealed class VersionCommand : CommandBase
         {
-            public VersionCommand(IProcessStarter processStarter, params string[] projectFileNames)
-                : base(processStarter, projectFileNames)
+            public VersionCommand(IProcessStarter starter, params string[] files)
+                : base(starter, files)
             {
+            }
+
+            protected override string Command => string.Empty;
+
+            protected internal override string[] Verify()
+            {
+                return new string[] { };
             }
 
             protected override IReadOnlyCollection<string> PrepareArguments() =>

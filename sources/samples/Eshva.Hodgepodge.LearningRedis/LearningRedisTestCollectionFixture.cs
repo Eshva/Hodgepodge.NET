@@ -82,7 +82,8 @@ namespace Eshva.Hodgepodge.LearningRedis
         private async Task UpDockerComposeFile(string dockerComposeFileName)
         {
             _fullDockerComposeFilePath = Path.Combine(CollectionFolder, dockerComposeFileName);
-            var upProjectCommand = new UpProjectCommand(_fullDockerComposeFilePath);
+            //var upProjectCommand = new UpProjectCommand(_fullDockerComposeFilePath);
+            var upProjectCommand = UpProjectCommand.WithFiles(_fullDockerComposeFilePath).Build();
             await upProjectCommand.Execute(TimeSpan.FromSeconds(10));
         }
 
