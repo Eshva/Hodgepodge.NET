@@ -19,18 +19,18 @@ namespace Eshva.DockerCompose.Commands.DownProject
         {
         }
 
-        protected override string Command => "down";
-
         protected internal override string[] Verify()
         {
             // TODO: Verification
             return new string[] { };
         }
 
-        protected override IReadOnlyCollection<string> PrepareArguments()
+        protected override string Command => "down";
+
+        protected override string[] PrepareArguments()
         {
             var arguments = new List<string> { "down" };
-            return arguments.AsReadOnly();
+            return arguments.ToArray();
         }
     }
 }

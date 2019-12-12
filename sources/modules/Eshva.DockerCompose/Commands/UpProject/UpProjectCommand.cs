@@ -63,11 +63,11 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         protected override string Command => "up";
 
-        protected override IReadOnlyCollection<string> PrepareArguments()
+        protected override string[] PrepareArguments()
         {
-            var arguments = new List<string> { "up" };
-            arguments.AddConditionally(Attached, "--detach");
-            return arguments.AsReadOnly();
+            var arguments = new List<string>();
+            arguments.AddConditionally(!Attached, "--detach");
+            return arguments.ToArray();
         }
 
         private static class Default

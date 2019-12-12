@@ -1,7 +1,6 @@
 #region Usings
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eshva.DockerCompose.Exceptions;
@@ -16,7 +15,7 @@ namespace Eshva.DockerCompose.Commands
     {
         protected CommandBase(IProcessStarter starter, params string[] files)
         {
-            Starter = starter;
+            _starter = starter;
             _files = files;
         }
 
@@ -31,30 +30,31 @@ namespace Eshva.DockerCompose.Commands
         public async Task Execute(TimeSpan executionTimeout)
         {
             var projectFileNames = _files.Aggregate(string.Empty, (result, current) => $"{result} -f \"{current}\"");
-            var arguments = PrepareArguments().Aggregate(string.Empty, (result, current) => $"{result} {current}");
+            var arguments = string.Join(" ", PrepareArguments());
 
-            var exitCode = await Starter.Start($"{projectFileNames.Trim()} {arguments.Trim()}".Trim(), executionTimeout);
+            var exitCode = await _starter.Start(
+                $"{Command.Trim()} {projectFileNames.Trim()} {arguments.Trim()}".Trim(),
+                executionTimeout);
             if (exitCode != 0)
             {
                 throw new CommandExecutionException(
                     $"Docker Compose command {GetType().Name} executed with an error. " +
                     $"Exit code was {exitCode}.{Environment.NewLine}{Environment.NewLine}" +
-                    $"Command STDOUT:{Environment.NewLine}{Starter.StandardOutput}{Environment.NewLine}" +
-                    $"Command STDERR:{Environment.NewLine}{Starter.StandardError}{Environment.NewLine}");
+                    $"Command STDOUT:{Environment.NewLine}{_starter.StandardOutput}{Environment.NewLine}" +
+                    $"Command STDERR:{Environment.NewLine}{_starter.StandardError}{Environment.NewLine}");
             }
         }
 
         protected internal abstract string[] Verify();
 
-        internal IProcessStarter Starter { private get; set; }
-
         protected abstract string Command { get; }
 
-        protected abstract IReadOnlyCollection<string> PrepareArguments();
+        protected abstract string[] PrepareArguments();
 
         private const string DockerComposeExecutable = "docker-compose";
-
         private readonly string[] _files;
         private readonly TimeSpan _oneDayLong = TimeSpan.FromDays(1);
+
+        private readonly IProcessStarter _starter;
     }
 }

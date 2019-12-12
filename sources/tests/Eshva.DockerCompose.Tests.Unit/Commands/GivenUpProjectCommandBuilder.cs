@@ -14,7 +14,6 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
         public void ShouldTBD()
         {
             var command = UpProjectCommand.WithFiles("sdfsd", "sfsdfsd")
-                                          .Detached()
                                           .Build();
         }
     }

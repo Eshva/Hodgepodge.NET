@@ -24,7 +24,6 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
             starterMock.Setup(starter => starter.Start(It.Is(argumentsValidator), It.IsAny<TimeSpan>()))
                        .Returns(Task.FromResult(0));
             var command = UpProjectCommand.WithFilesAndStarter(starterMock.Object, "project.yaml")
-                                          .Detached()
                                           .Build();
             await command.Execute();
             starterMock.Verify(

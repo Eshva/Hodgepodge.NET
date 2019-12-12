@@ -78,15 +78,15 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
 
         private sealed class BadCommand : CommandBase
         {
-            protected override string Command => "fook";
-
             protected internal override string[] Verify()
             {
                 return new string[] { };
             }
 
-            protected override IReadOnlyCollection<string> PrepareArguments() =>
-                new List<string>(new[] { "fook", "-it" }).AsReadOnly();
+            protected override string Command => "fook";
+
+            protected override string[] PrepareArguments() =>
+                new List<string>(new[] { "fook", "-it" }).ToArray();
         }
 
         private sealed class CommandWithProjects : CommandBase
@@ -96,14 +96,14 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
             {
             }
 
-            protected override string Command => "some";
-
             protected internal override string[] Verify()
             {
                 return new string[] { };
             }
 
-            protected override IReadOnlyCollection<string> PrepareArguments() => new List<string>().AsReadOnly();
+            protected override string Command => "some";
+
+            protected override string[] PrepareArguments() => new List<string>().ToArray();
         }
 
         private sealed class VersionCommand : CommandBase
@@ -113,15 +113,15 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
             {
             }
 
-            protected override string Command => string.Empty;
-
             protected internal override string[] Verify()
             {
                 return new string[] { };
             }
 
-            protected override IReadOnlyCollection<string> PrepareArguments() =>
-                new List<string>(new[] { "--version" }).AsReadOnly();
+            protected override string Command => string.Empty;
+
+            protected override string[] PrepareArguments() =>
+                new List<string>(new[] { "--version" }).ToArray();
         }
     }
 }
