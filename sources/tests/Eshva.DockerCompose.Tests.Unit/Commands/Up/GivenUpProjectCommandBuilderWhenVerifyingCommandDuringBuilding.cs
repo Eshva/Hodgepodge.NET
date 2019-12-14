@@ -18,28 +18,57 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Up
         [Fact]
         public void ShouldDisallowCombiningOfDetachingAndStoppingAllContainersIfAnyOneStopped()
         {
-            var processStarterMock = new Mock<IProcessStarter>();
-            var builder = UpProjectCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
-            Action build = () => builder.StopAllContainersIfAnyOneStopped().Build();
-            build.Should().ThrowExactly<CommandBuildException>()
-                 .Which.Errors.Should().Contain(
-                     error => error.Contains("detach", StringComparison.OrdinalIgnoreCase) &&
-                              error.Contains("stop", StringComparison.OrdinalIgnoreCase));
+            ValidateOptions(
+                builder => builder.StopAllContainersIfAnyOneStopped(),
+                error => error.Contains("detach", StringComparison.OrdinalIgnoreCase) &&
+                         error.Contains("stop", StringComparison.OrdinalIgnoreCase));
         }
 
-        private static void TestOption(
+        [Fact]
+        public void ShouldDisallowCombiningOfDoNotRecreateExistingContainersAndRecreateDependedContainers()
+        {
+            ValidateOptions(
+                builder => builder.DoNotRecreateExistingContainers().RecreateDependedContainers(),
+                error => error.Contains("DoNotRecreateExistingContainers", StringComparison.OrdinalIgnoreCase) &&
+                         error.Contains("RecreateDependedContainers", StringComparison.OrdinalIgnoreCase));
+        }
+
+        [Fact]
+        public void ShouldDisallowCombiningOfDoNotRecreateExistingContainersAndForceRecreateContainers()
+        {
+            ValidateOptions(
+                builder => builder.DoNotRecreateExistingContainers().ForceRecreateContainers(),
+                error => error.Contains("DoNotRecreateExistingContainers", StringComparison.OrdinalIgnoreCase) &&
+                         error.Contains("ForceRecreateContainers", StringComparison.OrdinalIgnoreCase));
+        }
+
+        [Fact]
+        public void ShouldDisallowCombiningOfDoNotRecreateExistingContainersAndRecreateAnonymousVolumes()
+        {
+            ValidateOptions(
+                builder => builder.DoNotRecreateExistingContainers().RecreateAnonymousVolumes(),
+                error => error.Contains("DoNotRecreateExistingContainers", StringComparison.OrdinalIgnoreCase) &&
+                         error.Contains("RecreateAnonymousVolumes", StringComparison.OrdinalIgnoreCase));
+        }
+
+        [Fact]
+        public void ShouldDisallowCombiningOfDoNotBuildMissingImagesAndForceBuildImages()
+        {
+            ValidateOptions(
+                builder => builder.DoNotBuildMissingImages().ForceBuildImages(),
+                error => error.Contains("DoNotBuildMissingImages", StringComparison.OrdinalIgnoreCase) &&
+                         error.Contains("ForceBuildImages", StringComparison.OrdinalIgnoreCase));
+        }
+
+        private static void ValidateOptions(
             Func<UpProjectCommandBuilder, UpProjectCommandBuilder> configure,
-            Func<string, bool> checkArguments)
+            Func<string, bool> validateOptions)
         {
             var processStarterMock = new Mock<IProcessStarter>();
             var builder = UpProjectCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
-            var command = configure(builder).Build();
-            command.Execute();
-            processStarterMock.Verify(
-                starter => starter.Start(
-                    It.Is<string>(arguments => checkArguments(arguments)),
-                    TimeSpan.FromDays(1)),
-                Times.Once());
+            Action build = () => configure(builder).Build();
+            build.Should().ThrowExactly<CommandBuildException>()
+                 .Which.Errors.Should().Contain(error => validateOptions(error));
         }
     }
 }

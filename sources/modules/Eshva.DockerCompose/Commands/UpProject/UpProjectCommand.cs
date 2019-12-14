@@ -33,21 +33,21 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         internal bool DoNotStartLinkedServices { private get; set; } = Default.DoNotStartLinkedServices;
 
-        internal bool ForceRecreateContainers { private get; set; } = Default.ForceRecreateContainers;
+        internal bool ForceRecreateContainers { get; set; } = Default.ForceRecreateContainers;
 
-        internal bool RecreateDependedContainers { private get; set; } = Default.RecreateDependedContainers;
+        internal bool RecreateDependedContainers { get; set; } = Default.RecreateDependedContainers;
 
-        internal bool DoNotRecreateExistingContainers { private get; set; } = Default.DoNotRecreateExistingContainers;
+        internal bool DoNotRecreateExistingContainers { get; set; } = Default.DoNotRecreateExistingContainers;
 
-        internal bool DoNotBuildMissingImages { private get; set; } = Default.DoNotBuildMissingImages;
+        internal bool DoNotBuildMissingImages { get; set; } = Default.DoNotBuildMissingImages;
 
         internal bool DoNotStartServices { private get; set; } = Default.DoNotStartServices;
 
-        internal bool ForceBuildImages { private get; set; } = Default.ForceBuildImages;
+        internal bool ForceBuildImages { get; set; } = Default.ForceBuildImages;
 
         internal bool StopAllContainersIfAnyOneStopped { get; set; } = Default.StopAllContainersIfAnyOneStopped;
 
-        internal bool RecreateAnonymousVolumes { private get; set; } = Default.RecreateAnonymousVolumes;
+        internal bool RecreateAnonymousVolumes { get; set; } = Default.RecreateAnonymousVolumes;
 
         internal bool RemoveOrphanContainers { private get; set; } = Default.RemoveOrphanContainers;
 
