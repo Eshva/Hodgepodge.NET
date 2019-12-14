@@ -26,11 +26,7 @@ namespace Eshva.DockerCompose.Commands.DownProject
         public static DownProjectCommandBuilder WithFilesAndStarter(IProcessStarter starter, params string[] files) =>
             new DownProjectCommandBuilder(new DownProjectCommand(starter, files));
 
-        protected internal override IValidator CreateValidator()
-        {
-            // TODO: Implement DownProjectCommandValidator
-            return new InlineValidator<DownProjectCommand>();
-        }
+        protected internal override IValidator CreateValidator() => new InlineValidator<DownProjectCommand>();
 
         internal ImageRemovingType RemoveImages { get; set; } = Default.RemoveImages;
 
