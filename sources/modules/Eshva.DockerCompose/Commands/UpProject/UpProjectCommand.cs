@@ -1,6 +1,7 @@
 #region Usings
 
 using System.Collections.Generic;
+using System.Linq;
 using Eshva.DockerCompose.Extensions;
 using Eshva.DockerCompose.Infrastructure;
 
@@ -33,13 +34,13 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         internal bool ForceRecreateContainers { private get; set; } = Default.ForceRecreateContainers;
 
-        internal bool DoNotRecreateExistingContainers { private get; set; } = Default.DoNotRecreateExistingContainers;
-
-        internal bool DoNotStartServices { private get; set; } = Default.DoNotStartServices;
-
         internal bool RecreateDependedContainers { private get; set; } = Default.RecreateDependedContainers;
 
+        internal bool DoNotRecreateExistingContainers { private get; set; } = Default.DoNotRecreateExistingContainers;
+
         internal bool DoNotBuildMissingImages { private get; set; } = Default.DoNotBuildMissingImages;
+
+        internal bool DoNotStartServices { private get; set; } = Default.DoNotStartServices;
 
         internal bool ForceBuildImages { private get; set; } = Default.ForceBuildImages;
 
@@ -66,7 +67,51 @@ namespace Eshva.DockerCompose.Commands.UpProject
         protected override string[] PrepareArguments()
         {
             var arguments = new List<string>();
-            arguments.AddConditionally(!Attached, "--detach");
+            arguments.AddConditionally(
+                Attached == Default.Attached,
+                "--detach");
+            arguments.AddConditionally(
+                WithQuietPull != Default.WithQuietPull,
+                "--quiet-pull");
+            arguments.AddConditionally(
+                DoNotStartLinkedServices != Default.DoNotStartLinkedServices,
+                "--no-deps");
+            arguments.AddConditionally(
+                ForceRecreateContainers != Default.ForceRecreateContainers,
+                "--force-recreate");
+            arguments.AddConditionally(
+                RecreateDependedContainers != Default.RecreateDependedContainers,
+                "--always-recreate-deps");
+            arguments.AddConditionally(
+                DoNotRecreateExistingContainers != Default.DoNotRecreateExistingContainers,
+                "--no-recreate");
+            arguments.AddConditionally(
+                DoNotBuildMissingImages != Default.DoNotBuildMissingImages,
+                "--no-build");
+            arguments.AddConditionally(
+                DoNotStartServices != Default.DoNotStartServices,
+                "--no-start");
+            arguments.AddConditionally(
+                ForceBuildImages != Default.ForceBuildImages,
+                "--build");
+            arguments.AddConditionally(
+                StopAllContainersIfAnyOneStopped != Default.StopAllContainersIfAnyOneStopped,
+                "--abort-on-container-exit");
+            arguments.AddConditionally(
+                RecreateAnonymousVolumes != Default.RecreateAnonymousVolumes,
+                "--renew-anon-volumes");
+            arguments.AddConditionally(
+                RemoveOrphanContainers != Default.RemoveOrphanContainers,
+                "--remove-orphans");
+            arguments.AddConditionally(
+                ShutdownTimeoutSeconds != Default.ShutdownTimeoutSeconds,
+                $"--timeout {ShutdownTimeoutSeconds}");
+            arguments.AddConditionally(
+                TakeExitCodeFromService != Default.TakeExitCodeFromService,
+                $"--exit-code-from {TakeExitCodeFromService}");
+            arguments.AddConditionally(
+                Scaling.Count > 0,
+                string.Join(" ", Scaling.Select(pair => $"--scale {pair.Key}={pair.Value}")));
             return arguments.ToArray();
         }
 

@@ -92,6 +92,7 @@ namespace Eshva.DockerCompose.Commands.UpProject
             builder.Command.TakeExitCodeFromService = serviceName;
             return builder;
         }
+
         public static UpProjectCommandBuilder ScaleService(this UpProjectCommandBuilder builder, string serviceName, int instanceNumber)
         {
             builder.Command.Scaling.Add(serviceName, instanceNumber);
