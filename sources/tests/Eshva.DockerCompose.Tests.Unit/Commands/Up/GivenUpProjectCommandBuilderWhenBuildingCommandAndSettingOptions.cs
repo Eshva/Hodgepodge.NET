@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Eshva.DockerCompose.Tests.Unit.Commands.Up
 {
-    public sealed class GivenUpProjectCommandBuilder
+    public sealed class GivenUpProjectCommandBuilderWhenBuildingCommandAndSettingOptions
     {
         [Fact]
         public void ShouldBuildDetachedCommandByDefault()
@@ -141,7 +141,9 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Up
                 arguments => arguments.Contains("--scale service1=5") && arguments.Contains("--scale service2=10"));
         }
 
-        private void TestOption(Func<UpProjectCommandBuilder, UpProjectCommandBuilder> configure, Func<string, bool> checkArguments)
+        private static void TestOption(
+            Func<UpProjectCommandBuilder, UpProjectCommandBuilder> configure,
+            Func<string, bool> checkArguments)
         {
             var processStarterMock = new Mock<IProcessStarter>();
             var builder = UpProjectCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
