@@ -1,6 +1,6 @@
 namespace Eshva.DockerCompose.Commands.UpProject
 {
-    public sealed class UpProjectCommandBuilder : CommandsBuilderBase<UpProjectCommand>
+    public sealed class UpProjectCommandBuilder : CommandBuilderBase<UpProjectCommand>
     {
         internal UpProjectCommandBuilder(UpProjectCommand command) : base(command)
         {

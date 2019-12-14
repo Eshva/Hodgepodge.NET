@@ -8,10 +8,10 @@ using Eshva.DockerCompose.Exceptions;
 
 namespace Eshva.DockerCompose.Commands
 {
-    public class CommandsBuilderBase<TCommand>
+    public class CommandBuilderBase<TCommand>
         where TCommand : CommandBase
     {
-        protected CommandsBuilderBase(TCommand command)
+        protected CommandBuilderBase(TCommand command)
         {
             Command = command;
         }
