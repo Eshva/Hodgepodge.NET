@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Eshva.Hodgepodge.Tests.Unit.CollectionFixtureBase
 {
-    [CollectionDefinition(CollectionName)]
+    [CollectionDefinition(CollectionName, DisableParallelization = true)]
     public sealed class CollectionFixtureBaseCollection : ICollectionFixture<CollectionFixtureBaseCollectionFixture>
     {
         public const string CollectionName = "CollectionFixtureBase test collection";

@@ -8,13 +8,14 @@ using Eshva.DockerCompose.Commands;
 using Eshva.DockerCompose.Exceptions;
 using Eshva.DockerCompose.Infrastructure;
 using FluentAssertions;
+using FluentValidation;
 using Moq;
 using Xunit;
 
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit
+namespace Eshva.DockerCompose.Tests.Unit.Commands
 {
     public sealed class GivenCommandBaseWhenExecuteCalled
     {
@@ -78,29 +79,50 @@ namespace Eshva.DockerCompose.Tests.Unit
 
         private sealed class BadCommand : CommandBase
         {
-            protected override IReadOnlyCollection<string> PrepareArguments() =>
-                new List<string>(new[] { "fook", "-it" }).AsReadOnly();
+            protected internal override IValidator CreateValidator()
+            {
+                return new InlineValidator<BadCommand>();
+            }
+
+            protected override string Command => "fook";
+
+            protected override string[] PrepareArguments() =>
+                new List<string>(new[] { "fook", "-it" }).ToArray();
         }
 
         private sealed class CommandWithProjects : CommandBase
         {
-            public CommandWithProjects(IProcessStarter processStarter, params string[] projectFileNames)
-                : base(processStarter, projectFileNames)
+            public CommandWithProjects(IProcessStarter starter, params string[] files)
+                : base(starter, files)
             {
             }
 
-            protected override IReadOnlyCollection<string> PrepareArguments() => new List<string>().AsReadOnly();
+            protected internal override IValidator CreateValidator()
+            {
+                return new InlineValidator<CommandWithProjects>();
+            }
+
+            protected override string Command => "some";
+
+            protected override string[] PrepareArguments() => new List<string>().ToArray();
         }
 
         private sealed class VersionCommand : CommandBase
         {
-            public VersionCommand(IProcessStarter processStarter, params string[] projectFileNames)
-                : base(processStarter, projectFileNames)
+            public VersionCommand(IProcessStarter starter, params string[] files)
+                : base(starter, files)
             {
             }
 
-            protected override IReadOnlyCollection<string> PrepareArguments() =>
-                new List<string>(new[] { "--version" }).AsReadOnly();
+            protected internal override IValidator CreateValidator()
+            {
+                return new InlineValidator<VersionCommand>();
+            }
+
+            protected override string Command => string.Empty;
+
+            protected override string[] PrepareArguments() =>
+                new List<string>(new[] { "--version" }).ToArray();
         }
     }
 }

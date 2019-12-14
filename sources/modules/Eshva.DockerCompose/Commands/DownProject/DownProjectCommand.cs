@@ -2,27 +2,36 @@
 
 using System.Collections.Generic;
 using Eshva.DockerCompose.Infrastructure;
+using FluentValidation;
 
 #endregion
 
 
 namespace Eshva.DockerCompose.Commands.DownProject
 {
-    public class DownProjectCommand : CommandBase
+    public sealed class DownProjectCommand : CommandBase
     {
-        public DownProjectCommand(IProcessStarter processStarter, params string[] projectFileNames)
-            : base(processStarter, projectFileNames)
+        // TODO: Private constructors and a builder.
+        public DownProjectCommand(IProcessStarter starter, params string[] files) : base(starter, files)
         {
         }
 
-        public DownProjectCommand(params string[] projectFileNames) : base(projectFileNames)
+        public DownProjectCommand(params string[] files) : base(files)
         {
         }
 
-        protected override IReadOnlyCollection<string> PrepareArguments()
+        protected internal override IValidator CreateValidator()
         {
-            var arguments = new List<string> { "down" };
-            return arguments.AsReadOnly();
+            // TODO: Implement DownProjectCommandValidator
+            return new InlineValidator<DownProjectCommand>();
+        }
+
+        protected override string Command => "down";
+
+        protected override string[] PrepareArguments()
+        {
+            var arguments = new List<string>();
+            return arguments.ToArray();
         }
     }
 }

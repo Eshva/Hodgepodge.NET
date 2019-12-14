@@ -1,11 +1,11 @@
 #region Usings
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eshva.DockerCompose.Exceptions;
 using Eshva.DockerCompose.Infrastructure;
+using FluentValidation;
 
 #endregion
 
@@ -14,40 +14,48 @@ namespace Eshva.DockerCompose.Commands
 {
     public abstract class CommandBase
     {
-        protected CommandBase(IProcessStarter processStarter, params string[] projectFileNames)
+        protected CommandBase(IProcessStarter starter, params string[] files)
         {
-            _processStarter = processStarter;
-            _projectFileNames = projectFileNames;
+            _starter = starter;
+            _files = files;
         }
 
-        protected CommandBase(params string[] projectFileNames)
-            : this(new ExecutableProcessStarter(DockerComposeExecutable), projectFileNames)
+        protected CommandBase(params string[] files)
+            : this(new ExecutableProcessStarter(DockerComposeExecutable), files)
         {
+            _files = files;
         }
 
         public Task Execute() => Execute(_oneDayLong);
 
         public async Task Execute(TimeSpan executionTimeout)
         {
-            var projectFileNames = _projectFileNames.Aggregate(string.Empty, (result, current) => $"{result} -f \"{current}\"");
-            var arguments = PrepareArguments().Aggregate(string.Empty, (result, current) => $"{result} {current}");
+            var projectFileNames = _files.Aggregate(string.Empty, (result, current) => $"{result} -f \"{current}\"");
+            var arguments = string.Join(" ", PrepareArguments());
 
-            var exitCode = await _processStarter.Start($"{projectFileNames.Trim()} {arguments.Trim()}".Trim(), executionTimeout);
+            var exitCode = await _starter.Start(
+                $"{projectFileNames.Trim()} {Command.Trim()} {arguments.Trim()}".Trim(),
+                executionTimeout);
             if (exitCode != 0)
             {
                 throw new CommandExecutionException(
                     $"Docker Compose command {GetType().Name} executed with an error. " +
                     $"Exit code was {exitCode}.{Environment.NewLine}{Environment.NewLine}" +
-                    $"Command STDOUT:{Environment.NewLine}{_processStarter.StandardOutput}{Environment.NewLine}" +
-                    $"Command STDERR:{Environment.NewLine}{_processStarter.StandardError}{Environment.NewLine}");
+                    $"Command STDOUT:{Environment.NewLine}{_starter.StandardOutput.ReadToEnd()}{Environment.NewLine}" +
+                    $"Command STDERR:{Environment.NewLine}{_starter.StandardError.ReadToEnd()}{Environment.NewLine}");
             }
         }
 
-        protected abstract IReadOnlyCollection<string> PrepareArguments();
+        protected internal abstract IValidator CreateValidator();
+
+        protected abstract string Command { get; }
+
+        protected abstract string[] PrepareArguments();
 
         private const string DockerComposeExecutable = "docker-compose";
+        private readonly string[] _files;
         private readonly TimeSpan _oneDayLong = TimeSpan.FromDays(1);
-        private readonly IProcessStarter _processStarter;
-        private readonly string[] _projectFileNames;
+
+        private readonly IProcessStarter _starter;
     }
 }
