@@ -6,9 +6,9 @@ using Xunit;
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit.Commands
+namespace Eshva.DockerCompose.Tests.Unit.Commands.Up
 {
-    public class GivenUpProjectCommandBuilder
+    public sealed class GivenUpProjectCommandBuilder
     {
         [Fact]
         public void ShouldTBD()
