@@ -29,9 +29,9 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         internal bool Attached { get; set; } = Default.Attached;
 
-        internal bool WithQuietPull { private get; set; } = Default.WithQuietPull;
+        internal bool WithQuietPull { get; set; } = Default.WithQuietPull;
 
-        internal bool DoNotStartLinkedServices { private get; set; } = Default.DoNotStartLinkedServices;
+        internal bool DoNotStartLinkedServices { get; set; } = Default.DoNotStartLinkedServices;
 
         internal bool ForceRecreateContainers { get; set; } = Default.ForceRecreateContainers;
 
@@ -41,7 +41,7 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         internal bool DoNotBuildMissingImages { get; set; } = Default.DoNotBuildMissingImages;
 
-        internal bool DoNotStartServices { private get; set; } = Default.DoNotStartServices;
+        internal bool DoNotStartServices { get; set; } = Default.DoNotStartServices;
 
         internal bool ForceBuildImages { get; set; } = Default.ForceBuildImages;
 
@@ -49,11 +49,11 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         internal bool RecreateAnonymousVolumes { get; set; } = Default.RecreateAnonymousVolumes;
 
-        internal bool RemoveOrphanContainers { private get; set; } = Default.RemoveOrphanContainers;
+        internal bool RemoveOrphanContainers { get; set; } = Default.RemoveOrphanContainers;
 
-        internal int ShutdownTimeoutSeconds { private get; set; } = Default.ShutdownTimeoutSeconds;
+        internal int ShutdownTimeoutSeconds { get; set; } = Default.ShutdownTimeoutSeconds;
 
-        internal string TakeExitCodeFromService { private get; set; } = Default.TakeExitCodeFromService;
+        internal string TakeExitCodeFromService { get; set; } = Default.TakeExitCodeFromService;
 
         internal IDictionary<string, int> Scaling { get; } = new Dictionary<string, int>();
 
