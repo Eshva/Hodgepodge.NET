@@ -34,7 +34,7 @@ namespace Eshva.Hodgepodge.LearningRedis
         protected override async Task TeardownCollection()
         {
             Redis?.Dispose();
-            await new DownProjectCommand(_fullDockerComposeFilePath).Execute();
+            await DownProjectCommand.WithFiles(_fullDockerComposeFilePath).Build().Execute();
         }
 
         protected override Task WaitCollectionReady(CancellationToken cancellationToken)

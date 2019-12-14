@@ -3,6 +3,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Eshva.DockerCompose.Commands.DownProject;
 using Eshva.DockerCompose.Infrastructure;
 using Moq;
 using Xunit;
@@ -22,7 +23,8 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Down
                 arguments => arguments.Equals("-f \"project.yaml\" down", StringComparison.OrdinalIgnoreCase);
             starterMock.Setup(starter => starter.Start(It.Is(argumentsValidator), It.IsAny<TimeSpan>()))
                        .Returns(Task.FromResult(0));
-            var command = new DockerCompose.Commands.DownProject.DownProjectCommand(starterMock.Object, "project.yaml");
+            var command = DownProjectCommand.WithFilesAndStarter(starterMock.Object, "project.yaml")
+                                            .Build();
             await command.Execute();
             starterMock.Verify(
                 starter => starter.Start(It.Is(argumentsValidator), It.IsAny<TimeSpan>()),
