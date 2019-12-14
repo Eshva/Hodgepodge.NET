@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Eshva.Hodgepodge.LearningRedis
 {
-    [CollectionDefinition(CollectionName)]
+    [CollectionDefinition(CollectionName, DisableParallelization = true)]
     public sealed class LearningRedisTestCollection : ICollectionFixture<LearningRedisTestCollectionFixture>
     {
         public const string CollectionName = "Learning Redis";

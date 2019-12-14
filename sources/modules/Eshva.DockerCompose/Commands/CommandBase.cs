@@ -33,15 +33,15 @@ namespace Eshva.DockerCompose.Commands
             var arguments = string.Join(" ", PrepareArguments());
 
             var exitCode = await _starter.Start(
-                $"{Command.Trim()} {projectFileNames.Trim()} {arguments.Trim()}".Trim(),
+                $"{projectFileNames.Trim()} {Command.Trim()} {arguments.Trim()}".Trim(),
                 executionTimeout);
             if (exitCode != 0)
             {
                 throw new CommandExecutionException(
                     $"Docker Compose command {GetType().Name} executed with an error. " +
                     $"Exit code was {exitCode}.{Environment.NewLine}{Environment.NewLine}" +
-                    $"Command STDOUT:{Environment.NewLine}{_starter.StandardOutput}{Environment.NewLine}" +
-                    $"Command STDERR:{Environment.NewLine}{_starter.StandardError}{Environment.NewLine}");
+                    $"Command STDOUT:{Environment.NewLine}{_starter.StandardOutput.ReadToEnd()}{Environment.NewLine}" +
+                    $"Command STDERR:{Environment.NewLine}{_starter.StandardError.ReadToEnd()}{Environment.NewLine}");
             }
         }
 

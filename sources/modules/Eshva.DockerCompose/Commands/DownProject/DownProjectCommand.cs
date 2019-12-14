@@ -29,7 +29,7 @@ namespace Eshva.DockerCompose.Commands.DownProject
 
         protected override string[] PrepareArguments()
         {
-            var arguments = new List<string> { "down" };
+            var arguments = new List<string>();
             return arguments.ToArray();
         }
     }
