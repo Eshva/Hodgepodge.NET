@@ -97,7 +97,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Up
         public void ShouldBuildCommandThatStopsAllContainersIfAnyOneStopped()
         {
             TestOption(
-                builder => builder.StopAllContainersIfAnyOneStopped(),
+                builder => builder.Attached().StopAllContainersIfAnyOneStopped(),
                 arguments => arguments.Contains("--abort-on-container-exit"));
         }
 

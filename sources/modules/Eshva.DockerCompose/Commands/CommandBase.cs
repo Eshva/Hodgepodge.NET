@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Eshva.DockerCompose.Exceptions;
 using Eshva.DockerCompose.Infrastructure;
+using FluentValidation;
 
 #endregion
 
@@ -45,7 +46,7 @@ namespace Eshva.DockerCompose.Commands
             }
         }
 
-        protected internal abstract string[] Verify();
+        protected internal abstract IValidator CreateValidator();
 
         protected abstract string Command { get; }
 

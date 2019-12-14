@@ -4,6 +4,8 @@ using System;
 using Eshva.DockerCompose.Commands;
 using Eshva.DockerCompose.Exceptions;
 using FluentAssertions;
+using FluentValidation;
+using FluentValidation.Results;
 using Moq;
 using Xunit;
 
@@ -17,19 +19,32 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
         [Fact]
         public void ShouldVerifyCommand()
         {
+            var validatorMock = new Mock<IValidator<CommandBase>>();
+            validatorMock.Setup(validator => validator.Validate(It.IsAny<object>()))
+                         .Returns(new ValidationResult());
             var commandMock = new Mock<CommandBase>();
+            commandMock.Setup(command => command.CreateValidator()).Returns(validatorMock.Object);
             var builder = new TestCommandBuilder(commandMock.Object);
 
             builder.Build();
 
-            commandMock.Verify(command => command.Verify(), Times.Once());
+            commandMock.Verify(command => command.CreateValidator(), Times.Once());
         }
 
         [Fact]
         public void ShouldThrowWithErrorsIfAnyFound()
         {
+            var validatorMock = new Mock<IValidator<CommandBase>>();
+            validatorMock.Setup(validator => validator.Validate(It.IsAny<object>()))
+                         .Returns(
+                             new ValidationResult(
+                                 new[]
+                                 {
+                                     new ValidationFailure("not-important", "error1"),
+                                     new ValidationFailure("not-important", "error2")
+                                 }));
             var commandMock = new Mock<CommandBase>();
-            commandMock.Setup(command => command.Verify()).Returns(new[] { "error1", "error2" });
+            commandMock.Setup(command => command.CreateValidator()).Returns(validatorMock.Object);
             var builder = new TestCommandBuilder(commandMock.Object);
 
             Action build = () => builder.Build();
@@ -43,8 +58,11 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
         [Fact]
         public void ShouldReturnBuiltCommandIfNoVerificationErrorsFound()
         {
+            var validatorMock = new Mock<IValidator<CommandBase>>();
+            validatorMock.Setup(validator => validator.Validate(It.IsAny<object>()))
+                         .Returns(new ValidationResult());
             var commandMock = new Mock<CommandBase>();
-            commandMock.Setup(command => command.Verify()).Returns(new string[0]);
+            commandMock.Setup(command => command.CreateValidator()).Returns(validatorMock.Object);
             var builder = new TestCommandBuilder(commandMock.Object);
 
             Func<CommandBase> build = () => builder.Build();

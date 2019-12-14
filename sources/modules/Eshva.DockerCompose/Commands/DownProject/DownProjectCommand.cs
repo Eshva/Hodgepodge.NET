@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using Eshva.DockerCompose.Infrastructure;
+using FluentValidation;
 
 #endregion
 
@@ -19,10 +20,10 @@ namespace Eshva.DockerCompose.Commands.DownProject
         {
         }
 
-        protected internal override string[] Verify()
+        protected internal override IValidator CreateValidator()
         {
-            // TODO: Verification
-            return new string[] { };
+            // TODO: Implement DownProjectCommandValidator
+            return new InlineValidator<DownProjectCommand>();
         }
 
         protected override string Command => "down";

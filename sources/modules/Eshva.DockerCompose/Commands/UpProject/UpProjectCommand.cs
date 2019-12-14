@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Eshva.DockerCompose.Extensions;
 using Eshva.DockerCompose.Infrastructure;
+using FluentValidation;
 
 #endregion
 
@@ -26,7 +27,7 @@ namespace Eshva.DockerCompose.Commands.UpProject
         public static UpProjectCommandBuilder WithFilesAndStarter(IProcessStarter starter, params string[] files) =>
             new UpProjectCommandBuilder(new UpProjectCommand(starter, files));
 
-        internal bool Attached { private get; set; } = Default.Attached;
+        internal bool Attached { get; set; } = Default.Attached;
 
         internal bool WithQuietPull { private get; set; } = Default.WithQuietPull;
 
@@ -44,7 +45,7 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         internal bool ForceBuildImages { private get; set; } = Default.ForceBuildImages;
 
-        internal bool StopAllContainersIfAnyOneStopped { private get; set; } = Default.StopAllContainersIfAnyOneStopped;
+        internal bool StopAllContainersIfAnyOneStopped { get; set; } = Default.StopAllContainersIfAnyOneStopped;
 
         internal bool RecreateAnonymousVolumes { private get; set; } = Default.RecreateAnonymousVolumes;
 
@@ -56,11 +57,7 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         internal IDictionary<string, int> Scaling { get; } = new Dictionary<string, int>();
 
-        protected internal override string[] Verify()
-        {
-            // TODO: Verification.
-            return new string[] { };
-        }
+        protected internal override IValidator CreateValidator() => new UpProjectCommandValidator();
 
         protected override string Command => "up";
 

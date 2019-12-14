@@ -8,6 +8,7 @@ using Eshva.DockerCompose.Commands;
 using Eshva.DockerCompose.Exceptions;
 using Eshva.DockerCompose.Infrastructure;
 using FluentAssertions;
+using FluentValidation;
 using Moq;
 using Xunit;
 
@@ -78,9 +79,9 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
 
         private sealed class BadCommand : CommandBase
         {
-            protected internal override string[] Verify()
+            protected internal override IValidator CreateValidator()
             {
-                return new string[] { };
+                return new InlineValidator<BadCommand>();
             }
 
             protected override string Command => "fook";
@@ -96,9 +97,9 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
             {
             }
 
-            protected internal override string[] Verify()
+            protected internal override IValidator CreateValidator()
             {
-                return new string[] { };
+                return new InlineValidator<CommandWithProjects>();
             }
 
             protected override string Command => "some";
@@ -113,9 +114,9 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands
             {
             }
 
-            protected internal override string[] Verify()
+            protected internal override IValidator CreateValidator()
             {
-                return new string[] { };
+                return new InlineValidator<VersionCommand>();
             }
 
             protected override string Command => string.Empty;
