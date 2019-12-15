@@ -14,7 +14,7 @@ namespace Eshva.DockerCompose.Commands.StartServices
         /// Start existing containers for all services in project files.
         /// </summary>
         /// <returns>
-        /// Same command builder.
+        /// The same builder.
         /// </returns>
         public StartServicesCommandBuilder StartAllServices()
         {
@@ -29,7 +29,7 @@ namespace Eshva.DockerCompose.Commands.StartServices
         /// Names of services to start.
         /// </param>
         /// <returns>
-        /// Same builder.
+        /// The same builder.
         /// </returns>
         public StartServicesCommandBuilder StartServices(params string[] services)
         {
