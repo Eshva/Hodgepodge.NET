@@ -9,7 +9,7 @@ using Xunit;
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit.Commands.Down
+namespace Eshva.DockerCompose.Tests.Unit.Commands.DownProject
 {
     public sealed class GivenDownProjectCommandBuilderWhenBuildingCommandAndSettingOptions
     {

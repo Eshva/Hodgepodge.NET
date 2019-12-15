@@ -11,7 +11,7 @@ using Xunit;
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit.Commands.Up
+namespace Eshva.DockerCompose.Tests.Unit.Commands.UpProject
 {
     public sealed class GivenUpProjectCommandBuilderWhenVerifyingCommandDuringBuilding
     {
