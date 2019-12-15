@@ -18,7 +18,7 @@ namespace Eshva.DockerCompose.Commands.StopServices
         /// </returns>
         public StopServicesCommandBuilder StopAllServices()
         {
-            Command.DoStopAllServices = true;
+            Command.DoForAllServices = true;
             return this;
         }
 
