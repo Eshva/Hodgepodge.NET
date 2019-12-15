@@ -1,6 +1,7 @@
 #region Usings
 
 using System.Collections.Generic;
+using Eshva.DockerCompose.Commands.UpProject;
 using Eshva.DockerCompose.Extensions;
 using Eshva.DockerCompose.Infrastructure;
 
@@ -9,19 +10,51 @@ using Eshva.DockerCompose.Infrastructure;
 
 namespace Eshva.DockerCompose.Commands.DownProject
 {
+    /// <summary>
+    /// Stops containers and removes containers, networks, volumes, and images created by <see cref="UpProjectCommand"/>.
+    /// By default, the only things removed are:
+    ///   * Containers for services defined in the Compose file.
+    ///   * Networks defined in the networks section of the Compose file.
+    ///   * The default network, if one is used.
+    /// Networks and volumes defined as external are never removed.
+    /// More info about this command find here: https://docs.docker.com/compose/reference/down/
+    /// </summary>
     public sealed class DownProjectCommand : CommandBase
     {
+        /// <inheritdoc cref="CommandBase"/>
         private DownProjectCommand(IProcessStarter starter, params string[] files) : base(starter, files)
         {
         }
 
+        /// <inheritdoc cref="CommandBase"/>
         private DownProjectCommand(params string[] files) : base(files)
         {
         }
 
+        /// <summary>
+        /// Creates a command with specified in <paramref name="files"/> files.
+        /// </summary>
+        /// <param name="files">
+        /// Project files.
+        /// </param>
+        /// <returns>
+        /// Command builder.
+        /// </returns>
         public static DownProjectCommandBuilder WithFiles(params string[] files) =>
             new DownProjectCommandBuilder(new DownProjectCommand(files));
 
+        /// <summary>
+        /// Creates a command with specified in <paramref name="files"/> files with process starter <paramref name="starter"/>.
+        /// </summary>
+        /// <param name="starter">
+        /// Process starter that will be used to start docker-compose executable.
+        /// </param>
+        /// <param name="files">
+        /// Project files.
+        /// </param>
+        /// <returns>
+        /// Command builder.
+        /// </returns>
         public static DownProjectCommandBuilder WithFilesAndStarter(IProcessStarter starter, params string[] files) =>
             new DownProjectCommandBuilder(new DownProjectCommand(starter, files));
 
@@ -33,8 +66,10 @@ namespace Eshva.DockerCompose.Commands.DownProject
 
         internal int ShutdownTimeoutSeconds { get; set; } = Default.ShutdownTimeoutSeconds;
 
+        /// <inheritdoc cref="CommandBase.Command"/>
         protected override string Command => "down";
 
+        /// <inheritdoc cref="CommandBase.PrepareArguments"/>
         protected override string[] PrepareArguments()
         {
             var arguments = new List<string>();
