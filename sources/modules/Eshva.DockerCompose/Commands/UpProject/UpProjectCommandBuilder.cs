@@ -1,102 +1,252 @@
 namespace Eshva.DockerCompose.Commands.UpProject
 {
+    /// <summary>
+    /// The builder for <see cref="UpProjectCommand"/> command.
+    /// </summary>
     public sealed class UpProjectCommandBuilder : CommandBuilderBase<UpProjectCommand>
     {
+        /// <inheritdoc cref="CommandBuilderBase{TCommand}"/>
         internal UpProjectCommandBuilder(UpProjectCommand command) : base(command)
         {
         }
-    }
 
-    public static class UpProjectCommandBuilderExtensions
-    {
-        public static UpProjectCommandBuilder Attached(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Execute command in the attached mode.
+        /// </summary>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder Attached()
         {
-            builder.Command.Attached = true;
-            return builder;
+            Command.Attached = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder WithQuietPull(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Pull images without printing progress information.
+        /// </summary>
+        /// <remarks>
+        /// See --quiet-pull option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder WithQuietPull()
         {
-            builder.Command.WithQuietPull = true;
-            return builder;
+            Command.WithQuietPull = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder DoNotStartLinkedServices(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Don't start linked services.
+        /// </summary>
+        /// <remarks>
+        /// See --no-deps option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder DoNotStartLinkedServices()
         {
-            builder.Command.DoNotStartLinkedServices = true;
-            return builder;
+            Command.DoNotStartLinkedServices = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder ForceRecreateContainers(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Recreate containers even if their configuration and image haven't changed.
+        /// </summary>
+        /// <remarks>
+        /// See --force-recreate option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder ForceRecreateContainers()
         {
-            builder.Command.ForceRecreateContainers = true;
-            return builder;
+            Command.ForceRecreateContainers = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder RecreateDependedContainers(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Recreate dependent containers. Incompatible with <see cref="DoNotRecreateExistingContainers"/>.
+        /// </summary>
+        /// <remarks>
+        /// See --always-recreate-deps option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder RecreateDependedContainers()
         {
-            builder.Command.RecreateDependedContainers = true;
-            return builder;
+            Command.RecreateDependedContainers = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder DoNotRecreateExistingContainers(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// If containers already exist, don't recreate them. Incompatible with <see cref="ForceRecreateContainers"/>
+        /// and <see cref="RecreateAnonymousVolumes"/>.
+        /// </summary>
+        /// <remarks>
+        /// See --no-recreate option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder DoNotRecreateExistingContainers()
         {
-            builder.Command.DoNotRecreateExistingContainers = true;
-            return builder;
+            Command.DoNotRecreateExistingContainers = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder DoNotBuildMissingImages(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Don't build an image, even if it's missing. Incompatible with <see cref="ForceBuildImages"/>.
+        /// </summary>
+        /// <remarks>
+        /// See --no-build option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder DoNotBuildMissingImages()
         {
-            builder.Command.DoNotBuildMissingImages = true;
-            return builder;
+            Command.DoNotBuildMissingImages = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder DoNotStartServices(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Don't start the services after creating them.
+        /// </summary>
+        /// <remarks>
+        /// See --no-start option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder DoNotStartServices()
         {
-            builder.Command.DoNotStartServices = true;
-            return builder;
+            Command.DoNotStartServices = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder ForceBuildImages(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Build images before starting containers. Incompatible with <see cref="DoNotBuildMissingImages"/>.
+        /// </summary>
+        /// <remarks>
+        /// See --build option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder ForceBuildImages()
         {
-            builder.Command.ForceBuildImages = true;
-            return builder;
+            Command.ForceBuildImages = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder StopAllContainersIfAnyOneStopped(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Stops all containers if any container was stopped. Incompatible with <see cref="Attached"/> == false.
+        /// </summary>
+        /// <remarks>
+        /// See --abort-on-container-exit option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder StopAllContainersIfAnyOneStopped()
         {
-            builder.Command.StopAllContainersIfAnyOneStopped = true;
-            return builder;
+            Command.StopAllContainersIfAnyOneStopped = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder RemoveOrphanContainers(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Remove containers for services not defined in the Compose file.
+        /// </summary>
+        /// <remarks>
+        /// See --remove-orphans option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder RemoveOrphanContainers()
         {
-            builder.Command.RemoveOrphanContainers = true;
-            return builder;
+            Command.RemoveOrphanContainers = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder RecreateAnonymousVolumes(this UpProjectCommandBuilder builder)
+        /// <summary>
+        /// Recreate anonymous volumes instead of retrieving data from the previous containers.
+        /// Incompatible with see <see cref="DoNotRecreateExistingContainers"/>.
+        /// </summary>
+        /// <remarks>
+        /// See --renew-anon-volumes option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder RecreateAnonymousVolumes()
         {
-            builder.Command.RecreateAnonymousVolumes = true;
-            return builder;
+            Command.RecreateAnonymousVolumes = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder ShutdownTimeoutSeconds(this UpProjectCommandBuilder builder, int shutdownTimeoutSeconds)
+        /// <summary>
+        /// Use this timeout in seconds for container shutdown when attached or when
+        /// containers are already running. Default is 10 seconds.
+        /// </summary>
+        /// <param name="shutdownTimeoutSeconds">
+        /// Timeout in seconds.
+        /// </param>
+        /// <remarks>
+        /// See --timeout option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder ShutdownTimeoutSeconds(int shutdownTimeoutSeconds)
         {
-            builder.Command.ShutdownTimeoutSeconds = shutdownTimeoutSeconds;
-            return builder;
+            Command.ShutdownTimeoutSeconds = shutdownTimeoutSeconds;
+            return this;
         }
 
-        public static UpProjectCommandBuilder TakeExitCodeFromService(this UpProjectCommandBuilder builder, string serviceName)
+        /// <summary>
+        /// Return the exit code of the <paramref name="serviceName"/> service container.
+        /// Implies <see cref="StopAllContainersIfAnyOneStopped"/>.
+        /// </summary>
+        /// <param name="serviceName">
+        /// Name of the service.
+        /// </param>
+        /// <remarks>
+        /// See --exit-code-from option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder TakeExitCodeFromService(string serviceName)
         {
-            builder.Command.TakeExitCodeFromService = serviceName;
-            return builder;
+            Command.TakeExitCodeFromService = serviceName;
+            return this;
         }
 
-        public static UpProjectCommandBuilder ScaleService(this UpProjectCommandBuilder builder, string serviceName, int instanceNumber)
+        /// <summary>
+        /// Scale <paramref name="serviceName"/> service to <paramref name="instanceNumber"/> instances.
+        /// Overrides the 'scale' setting in the Compose file if present.
+        /// </summary>
+        /// <param name="serviceName">
+        /// Name of the service to scale.
+        /// </param>
+        /// <param name="instanceNumber">
+        /// Number of instances.
+        /// </param>
+        /// <remarks>
+        /// See --scale option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public UpProjectCommandBuilder ScaleService(string serviceName, int instanceNumber)
         {
-            builder.Command.Scaling.Add(serviceName, instanceNumber);
-            return builder;
+            Command.Scaling.Add(serviceName, instanceNumber);
+            return this;
         }
     }
 }

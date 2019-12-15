@@ -3,7 +3,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Eshva.DockerCompose.Commands.DownProject;
+using Eshva.DockerCompose.Commands.UpProject;
 using Eshva.DockerCompose.Infrastructure;
 using Moq;
 using Xunit;
@@ -11,20 +11,20 @@ using Xunit;
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit.Commands.Down
+namespace Eshva.DockerCompose.Tests.Unit.Commands.UpProject
 {
-    public sealed class GivenDownProjectCommandWhenExecuteCalled
+    public sealed class GivenUpProjectCommandWhenExecuteCalled
     {
         [Fact]
-        public async Task ShouldContainValidArguments()
+        public async Task ShouldContainValidArgumentsIfDetached()
         {
             var starterMock = new Mock<IProcessStarter>();
             Expression<Func<string, bool>> argumentsValidator =
-                arguments => arguments.Equals("-f \"project.yaml\" down", StringComparison.OrdinalIgnoreCase);
+                arguments => arguments.Equals("-f \"project.yaml\" up --detach", StringComparison.OrdinalIgnoreCase);
             starterMock.Setup(starter => starter.Start(It.Is(argumentsValidator), It.IsAny<TimeSpan>()))
                        .Returns(Task.FromResult(0));
-            var command = DownProjectCommand.WithFilesAndStarter(starterMock.Object, "project.yaml")
-                                            .Build();
+            var command = UpProjectCommand.WithFilesAndStarter(starterMock.Object, "project.yaml")
+                                          .Build();
             await command.Execute();
             starterMock.Verify(
                 starter => starter.Start(It.Is(argumentsValidator), It.IsAny<TimeSpan>()),

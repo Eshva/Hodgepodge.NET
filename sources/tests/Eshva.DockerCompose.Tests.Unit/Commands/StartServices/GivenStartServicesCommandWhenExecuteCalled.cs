@@ -3,7 +3,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Eshva.DockerCompose.Commands.UpProject;
+using Eshva.DockerCompose.Commands.StartServices;
 using Eshva.DockerCompose.Infrastructure;
 using Moq;
 using Xunit;
@@ -11,20 +11,21 @@ using Xunit;
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit.Commands.Up
+namespace Eshva.DockerCompose.Tests.Unit.Commands.StartServices
 {
-    public sealed class GivenUpProjectCommandWhenExecuteCalled
+    public sealed class GivenStartServicesCommandWhenExecuteCalled
     {
         [Fact]
-        public async Task ShouldContainValidArgumentsIfDetached()
+        public async Task ShouldContainValidArguments()
         {
             var starterMock = new Mock<IProcessStarter>();
             Expression<Func<string, bool>> argumentsValidator =
-                arguments => arguments.Equals("-f \"project.yaml\" up --detach", StringComparison.OrdinalIgnoreCase);
+                arguments => arguments.Equals("-f \"project.yaml\" start", StringComparison.OrdinalIgnoreCase);
             starterMock.Setup(starter => starter.Start(It.Is(argumentsValidator), It.IsAny<TimeSpan>()))
                        .Returns(Task.FromResult(0));
-            var command = UpProjectCommand.WithFilesAndStarter(starterMock.Object, "project.yaml")
-                                          .Build();
+            var command = StartServicesCommand.WithFilesAndStarter(starterMock.Object, "project.yaml")
+                                              .StartAllServices()
+                                              .Build();
             await command.Execute();
             starterMock.Verify(
                 starter => starter.Start(It.Is(argumentsValidator), It.IsAny<TimeSpan>()),

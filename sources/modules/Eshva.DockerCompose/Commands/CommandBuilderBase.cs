@@ -8,14 +8,35 @@ using Eshva.DockerCompose.Exceptions;
 
 namespace Eshva.DockerCompose.Commands
 {
+    /// <summary>
+    /// Base class for a builder of a Docker Compose command.
+    /// </summary>
+    /// <typeparam name="TCommand">
+    /// Docker Compose command type this builder is dedicated for.
+    /// </typeparam>
     public class CommandBuilderBase<TCommand>
         where TCommand : CommandBase
     {
+        /// <summary>
+        /// Creates a builder for the <paramref name="command"/> command.
+        /// </summary>
+        /// <param name="command">
+        /// Instance of a command.
+        /// </param>
         protected CommandBuilderBase(TCommand command)
         {
             Command = command;
         }
 
+        /// <summary>
+        /// Builds and validates the built command.
+        /// </summary>
+        /// <returns>
+        /// Built command ready for execution.
+        /// </returns>
+        /// <exception cref="CommandBuildException">
+        /// During validating the built command were found some errors.
+        /// </exception>
         public TCommand Build()
         {
             var validator = Command.CreateValidator();

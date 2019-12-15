@@ -1,42 +1,91 @@
 namespace Eshva.DockerCompose.Commands.DownProject
 {
+    /// <summary>
+    /// The builder for <see cref="DownProjectCommand"/> command.
+    /// </summary>
     public sealed class DownProjectCommandBuilder : CommandBuilderBase<DownProjectCommand>
     {
+        /// <inheritdoc cref="CommandBuilderBase{TCommand}"/>
         internal DownProjectCommandBuilder(DownProjectCommand command) : base(command)
         {
         }
-    }
 
-    public static class DownProjectCommandBuilderExtensions
-    {
-        public static DownProjectCommandBuilder RemoveAllImages(this DownProjectCommandBuilder builder)
+        /// <summary>
+        /// Remove all images used by any service.
+        /// </summary>
+        /// <remarks>
+        /// See --rmi all option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public DownProjectCommandBuilder RemoveAllImages()
         {
-            builder.Command.RemoveImages = DownProjectCommand.ImageRemovingType.All;
-            return builder;
+            Command.RemoveImages = DownProjectCommand.ImageRemovingType.All;
+            return this;
         }
 
-        public static DownProjectCommandBuilder RemoveLocalImages(this DownProjectCommandBuilder builder)
+        /// <summary>
+        /// Remove only images that don't have a custom tag set by the 'image' field.
+        /// </summary>
+        /// <remarks>
+        /// See --rmi local option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public DownProjectCommandBuilder RemoveLocalImages()
         {
-            builder.Command.RemoveImages = DownProjectCommand.ImageRemovingType.Local;
-            return builder;
+            Command.RemoveImages = DownProjectCommand.ImageRemovingType.Local;
+            return this;
         }
 
-        public static DownProjectCommandBuilder RemoveVolumes(this DownProjectCommandBuilder builder)
+        /// <summary>
+        /// Remove named volumes declared in the 'volumes' section of the Compose file and anonymous volumes attached to containers.
+        /// </summary>
+        /// <remarks>
+        /// See --volumes option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public DownProjectCommandBuilder RemoveVolumes()
         {
-            builder.Command.RemoveVolumes = true;
-            return builder;
+            Command.RemoveVolumes = true;
+            return this;
         }
 
-        public static DownProjectCommandBuilder RemoveOrphanContainers(this DownProjectCommandBuilder builder)
+        /// <summary>
+        /// Remove containers for services not defined in the Compose file.
+        /// </summary>
+        /// <remarks>
+        /// See --remove-orphans option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public DownProjectCommandBuilder RemoveOrphanContainers()
         {
-            builder.Command.RemoveOrphanContainers = true;
-            return builder;
+            Command.RemoveOrphanContainers = true;
+            return this;
         }
 
-        public static DownProjectCommandBuilder ShutdownTimeoutSeconds(this DownProjectCommandBuilder builder, int shutdownTimeoutSeconds)
+        /// <summary>
+        /// Specify a shutdown timeout in seconds. The default is 10 seconds.
+        /// </summary>
+        /// <param name="shutdownTimeoutSeconds">
+        /// Timeout in seconds.
+        /// </param>
+        /// <remarks>
+        /// See --timeout option.
+        /// </remarks>
+        /// <returns>
+        /// The same builder.
+        /// </returns>
+        public DownProjectCommandBuilder ShutdownTimeoutSeconds(int shutdownTimeoutSeconds)
         {
-            builder.Command.ShutdownTimeoutSeconds = shutdownTimeoutSeconds;
-            return builder;
+            Command.ShutdownTimeoutSeconds = shutdownTimeoutSeconds;
+            return this;
         }
     }
 }

@@ -7,8 +7,12 @@ using FluentValidation;
 
 namespace Eshva.DockerCompose.Commands.UpProject
 {
+    /// <summary>
+    /// Validator for <see cref="UpProjectCommand"/> command.
+    /// </summary>
     public sealed class UpProjectCommandValidator : AbstractValidator<UpProjectCommand>
     {
+        /// <inheritdoc cref="AbstractValidator{T}"/>
         public UpProjectCommandValidator()
         {
             RuleFor(command => command)

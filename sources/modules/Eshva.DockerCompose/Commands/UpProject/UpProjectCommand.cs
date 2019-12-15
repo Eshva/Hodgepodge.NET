@@ -11,19 +11,50 @@ using FluentValidation;
 
 namespace Eshva.DockerCompose.Commands.UpProject
 {
+    /// <summary>
+    /// Builds, (re)creates, starts, and attaches to containers for a service.
+    /// Unless they are already running, this command also starts any linked services.
+    /// More info about this command find here: https://docs.docker.com/compose/reference/up/
+    /// </summary>
+    /// <remarks>
+    /// By default the command executed in detached mode as it's more useful for testing purposes.
+    /// </remarks>
     public sealed class UpProjectCommand : CommandBase
     {
+        /// <inheritdoc cref="CommandBase"/>
         private UpProjectCommand(IProcessStarter processStarter, params string[] files) : base(processStarter, files)
         {
         }
 
+        /// <inheritdoc cref="CommandBase"/>
         private UpProjectCommand(params string[] files) : base(files)
         {
         }
 
+        /// <summary>
+        /// Creates a command with specified in <paramref name="files"/> files.
+        /// </summary>
+        /// <param name="files">
+        /// Project files.
+        /// </param>
+        /// <returns>
+        /// Command builder.
+        /// </returns>
         public static UpProjectCommandBuilder WithFiles(params string[] files) =>
             new UpProjectCommandBuilder(new UpProjectCommand(files));
 
+        /// <summary>
+        /// Creates a command with specified in <paramref name="files"/> files with process starter <paramref name="starter"/>.
+        /// </summary>
+        /// <param name="starter">
+        /// Process starter that will be used to start docker-compose executable.
+        /// </param>
+        /// <param name="files">
+        /// Project files.
+        /// </param>
+        /// <returns>
+        /// Command builder.
+        /// </returns>
         public static UpProjectCommandBuilder WithFilesAndStarter(IProcessStarter starter, params string[] files) =>
             new UpProjectCommandBuilder(new UpProjectCommand(starter, files));
 
@@ -57,10 +88,13 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         internal IDictionary<string, int> Scaling { get; } = new Dictionary<string, int>();
 
+        /// <inheritdoc cref="CommandBase.CreateValidator"/>
         protected internal override IValidator CreateValidator() => new UpProjectCommandValidator();
 
+        /// <inheritdoc cref="CommandBase.Command"/>
         protected override string Command => "up";
 
+        /// <inheritdoc cref="CommandBase.PrepareArguments"/>
         protected override string[] PrepareArguments()
         {
             var arguments = new List<string>();
