@@ -13,7 +13,7 @@ namespace Eshva.DockerCompose.Commands.Logs
     /// <summary>
     /// Takes log output from services in project.
     /// </summary>
-    public sealed class LogsCommand : CommandBase
+    public sealed class LogsCommand : ServicesCommandBase
     {
         /// <inheritdoc cref="CommandBase"/>
         private LogsCommand(IProcessStarter starter, params string[] files) : base(starter, files)
@@ -52,13 +52,9 @@ namespace Eshva.DockerCompose.Commands.Logs
         public static LogsCommandBuilder WithFilesAndStarter(IProcessStarter starter, params string[] files) =>
             new LogsCommandBuilder(new LogsCommand(starter, files));
 
-        internal List<string> FromServices { get; } = new List<string>();
-
         internal bool WithTimestamps { get; set; } = Default.WithTimestamps;
 
         internal int TakeNumberOfLines { get; set; } = Default.TakeNumberOfLines;
-
-        internal bool DoTakeFromAllServices { get; set; }
 
         /// <inheritdoc cref="CommandBase.CreateValidator"/>
         protected internal override IValidator CreateValidator() => new LogsCommandValidator();
@@ -66,15 +62,13 @@ namespace Eshva.DockerCompose.Commands.Logs
         /// <inheritdoc cref="CommandBase.Command"/>
         protected override string Command { get; } = "logs";
 
-        /// <inheritdoc cref="CommandBase.PrepareArguments"/>
-        protected override string[] PrepareArguments()
+        /// <inheritdoc cref="ServicesCommandBase.PrepareOptions"/>
+        protected override string[] PrepareOptions()
         {
-            var arguments = new List<string>();
-            arguments.AddConditionally(WithTimestamps, "--timestamps");
-            arguments.AddConditionally(TakeNumberOfLines > 0, $"--tail {TakeNumberOfLines}");
-            var services = string.Join(" ", FromServices);
-            arguments.AddConditionally(!string.IsNullOrWhiteSpace(services), services);
-            return arguments.ToArray();
+            var options = new List<string>();
+            options.AddConditionally(WithTimestamps, "--timestamps");
+            options.AddConditionally(TakeNumberOfLines > 0, $"--tail {TakeNumberOfLines}");
+            return options.ToArray();
         }
 
         private static class Default

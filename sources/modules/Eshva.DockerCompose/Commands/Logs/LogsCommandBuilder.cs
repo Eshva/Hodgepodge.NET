@@ -19,7 +19,7 @@ namespace Eshva.DockerCompose.Commands.Logs
         /// </returns>
         public LogsCommandBuilder FromAllServices()
         {
-            Command.DoTakeFromAllServices = true;
+            Command.DoForAllServices = true;
             return this;
         }
 
@@ -34,7 +34,7 @@ namespace Eshva.DockerCompose.Commands.Logs
         /// </returns>
         public LogsCommandBuilder FromServices(params string[] services)
         {
-            Command.FromServices.AddRange(services);
+            Command.Services.AddRange(services);
             return this;
         }
 
