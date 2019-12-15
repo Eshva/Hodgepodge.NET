@@ -1,102 +1,103 @@
 namespace Eshva.DockerCompose.Commands.UpProject
 {
+    /// <summary>
+    /// The builder for <see cref="UpProjectCommand"/> command.
+    /// </summary>
     public sealed class UpProjectCommandBuilder : CommandBuilderBase<UpProjectCommand>
     {
+        /// <inheritdoc cref="CommandBuilderBase{TCommand}"/>
         internal UpProjectCommandBuilder(UpProjectCommand command) : base(command)
         {
         }
-    }
 
-    public static class UpProjectCommandBuilderExtensions
-    {
-        public static UpProjectCommandBuilder Attached(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder Attached()
         {
-            builder.Command.Attached = true;
-            return builder;
+            Command.Attached = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder WithQuietPull(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder WithQuietPull()
         {
-            builder.Command.WithQuietPull = true;
-            return builder;
+            Command.WithQuietPull = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder DoNotStartLinkedServices(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder DoNotStartLinkedServices()
         {
-            builder.Command.DoNotStartLinkedServices = true;
-            return builder;
+            Command.DoNotStartLinkedServices = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder ForceRecreateContainers(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder ForceRecreateContainers()
         {
-            builder.Command.ForceRecreateContainers = true;
-            return builder;
+            Command.ForceRecreateContainers = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder RecreateDependedContainers(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder RecreateDependedContainers()
         {
-            builder.Command.RecreateDependedContainers = true;
-            return builder;
+            Command.RecreateDependedContainers = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder DoNotRecreateExistingContainers(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder DoNotRecreateExistingContainers()
         {
-            builder.Command.DoNotRecreateExistingContainers = true;
-            return builder;
+            Command.DoNotRecreateExistingContainers = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder DoNotBuildMissingImages(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder DoNotBuildMissingImages()
         {
-            builder.Command.DoNotBuildMissingImages = true;
-            return builder;
+            Command.DoNotBuildMissingImages = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder DoNotStartServices(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder DoNotStartServices()
         {
-            builder.Command.DoNotStartServices = true;
-            return builder;
+            Command.DoNotStartServices = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder ForceBuildImages(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder ForceBuildImages()
         {
-            builder.Command.ForceBuildImages = true;
-            return builder;
+            Command.ForceBuildImages = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder StopAllContainersIfAnyOneStopped(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder StopAllContainersIfAnyOneStopped()
         {
-            builder.Command.StopAllContainersIfAnyOneStopped = true;
-            return builder;
+            Command.StopAllContainersIfAnyOneStopped = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder RemoveOrphanContainers(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder RemoveOrphanContainers()
         {
-            builder.Command.RemoveOrphanContainers = true;
-            return builder;
+            Command.RemoveOrphanContainers = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder RecreateAnonymousVolumes(this UpProjectCommandBuilder builder)
+        public UpProjectCommandBuilder RecreateAnonymousVolumes()
         {
-            builder.Command.RecreateAnonymousVolumes = true;
-            return builder;
+            Command.RecreateAnonymousVolumes = true;
+            return this;
         }
 
-        public static UpProjectCommandBuilder ShutdownTimeoutSeconds(this UpProjectCommandBuilder builder, int shutdownTimeoutSeconds)
+        public UpProjectCommandBuilder ShutdownTimeoutSeconds(int shutdownTimeoutSeconds)
         {
-            builder.Command.ShutdownTimeoutSeconds = shutdownTimeoutSeconds;
-            return builder;
+            Command.ShutdownTimeoutSeconds = shutdownTimeoutSeconds;
+            return this;
         }
 
-        public static UpProjectCommandBuilder TakeExitCodeFromService(this UpProjectCommandBuilder builder, string serviceName)
+        public UpProjectCommandBuilder TakeExitCodeFromService(string serviceName)
         {
-            builder.Command.TakeExitCodeFromService = serviceName;
-            return builder;
+            Command.TakeExitCodeFromService = serviceName;
+            return this;
         }
 
-        public static UpProjectCommandBuilder ScaleService(this UpProjectCommandBuilder builder, string serviceName, int instanceNumber)
+        public UpProjectCommandBuilder ScaleService(string serviceName, int instanceNumber)
         {
-            builder.Command.Scaling.Add(serviceName, instanceNumber);
-            return builder;
+            Command.Scaling.Add(serviceName, instanceNumber);
+            return this;
         }
     }
 }
