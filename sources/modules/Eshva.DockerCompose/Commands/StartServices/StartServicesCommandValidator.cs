@@ -3,10 +3,10 @@ namespace Eshva.DockerCompose.Commands.StartServices
     /// <summary>
     /// Validator for the <see cref="StartServicesCommand"/> command.
     /// </summary>
-    public sealed class StartServicesCommandValidator : ServicesCommandValidatorBase<StartServicesCommand>
+    internal sealed class StartServicesCommandValidator : ServicesCommandValidatorBase<StartServicesCommand>
     {
         /// <inheritdoc cref="ServicesCommandValidatorBase{TCommand}"/>
-        public StartServicesCommandValidator() : base(BothSpecifiedErrorMessage, NoneSpecifiedErrorMessage)
+        internal StartServicesCommandValidator() : base(BothSpecifiedErrorMessage, NoneSpecifiedErrorMessage)
         {
         }
 

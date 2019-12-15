@@ -1,7 +1,7 @@
 namespace Eshva.DockerCompose.Commands.Logs
 {
     /// <summary>
-    /// The builder for <see cref="LogsCommand"/>.
+    /// The builder for <see cref="LogsCommand"/> command.
     /// </summary>
     public sealed class LogsCommandBuilder : CommandBuilderBase<LogsCommand>
 

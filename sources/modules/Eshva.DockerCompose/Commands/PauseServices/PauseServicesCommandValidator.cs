@@ -3,10 +3,10 @@ namespace Eshva.DockerCompose.Commands.PauseServices
     /// <summary>
     /// Validator for <see cref="PauseServicesCommand"/> command.
     /// </summary>
-    public sealed class PauseServicesCommandValidator : ServicesCommandValidatorBase<PauseServicesCommand>
+    internal sealed class PauseServicesCommandValidator : ServicesCommandValidatorBase<PauseServicesCommand>
     {
         /// <inheritdoc cref="ServicesCommandValidatorBase{TCommand}"/>
-        public PauseServicesCommandValidator() : base(BothSpecifiedErrorMessage, NoneSpecifiedErrorMessage)
+        internal PauseServicesCommandValidator() : base(BothSpecifiedErrorMessage, NoneSpecifiedErrorMessage)
         {
         }
 

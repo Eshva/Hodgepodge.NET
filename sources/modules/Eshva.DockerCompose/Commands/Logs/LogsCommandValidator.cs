@@ -3,10 +3,10 @@ namespace Eshva.DockerCompose.Commands.Logs
     /// <summary>
     /// Validator for the <see cref="LogsCommand"/> command.
     /// </summary>
-    public sealed class LogsCommandValidator : ServicesCommandValidatorBase<LogsCommand>
+    internal sealed class LogsCommandValidator : ServicesCommandValidatorBase<LogsCommand>
     {
         /// <inheritdoc cref="ServicesCommandValidatorBase{TCommand}"/>
-        public LogsCommandValidator() : base(BothSpecifiedErrorMessage, NoneSpecifiedErrorMessage)
+        internal LogsCommandValidator() : base(BothSpecifiedErrorMessage, NoneSpecifiedErrorMessage)
         {
         }
 
