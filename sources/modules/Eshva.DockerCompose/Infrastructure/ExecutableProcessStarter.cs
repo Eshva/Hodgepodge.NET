@@ -11,20 +11,32 @@ using Eshva.DockerCompose.Exceptions;
 
 namespace Eshva.DockerCompose.Infrastructure
 {
+    /// <summary>
+    /// Process starter for executables.
+    /// </summary>
     public sealed class ExecutableProcessStarter : IProcessStarter
     {
-        public ExecutableProcessStarter(string executableName)
+        /// <summary>
+        /// Creates process starter with path to <paramref name="executable"/>.
+        /// </summary>
+        /// <param name="executable">
+        /// Path to the starting executable.
+        /// </param>
+        public ExecutableProcessStarter(string executable)
         {
-            _executableName = executableName;
+            _executable = executable;
         }
 
+        /// <inheritdoc cref="IProcessStarter.StandardOutput"/>
         public TextReader StandardOutput { get; private set; } = new StringReader(string.Empty);
 
+        /// <inheritdoc cref="IProcessStarter.StandardError"/>
         public TextReader StandardError { get; private set; } = new StringReader(string.Empty);
 
+        /// <inheritdoc cref="IProcessStarter.Start"/>
         public Task<int> Start(string arguments, TimeSpan executionTimeout)
         {
-            var processStartInfo = new ProcessStartInfo(_executableName, arguments)
+            var processStartInfo = new ProcessStartInfo(_executable, arguments)
                                    {
                                        RedirectStandardOutput = true,
                                        RedirectStandardError = true,
@@ -38,7 +50,7 @@ namespace Eshva.DockerCompose.Infrastructure
             }
             catch (Exception exception)
             {
-                throw new ProcessStartException($"An error occured during starting the executable '{_executableName}'.", exception);
+                throw new ProcessStartException($"An error occured during starting the executable '{_executable}'.", exception);
             }
 
             if (process == null)
@@ -64,6 +76,6 @@ namespace Eshva.DockerCompose.Infrastructure
             }
         }
 
-        private readonly string _executableName;
+        private readonly string _executable;
     }
 }
