@@ -88,6 +88,7 @@ namespace Eshva.DockerCompose.Commands.UpProject
 
         internal IDictionary<string, int> Scaling { get; } = new Dictionary<string, int>();
 
+        /// <inheritdoc cref="CommandBase.CreateValidator"/>
         protected internal override IValidator CreateValidator() => new UpProjectCommandValidator();
 
         /// <inheritdoc cref="CommandBase.Command"/>
