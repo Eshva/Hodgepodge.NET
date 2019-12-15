@@ -1,7 +1,7 @@
 namespace Eshva.DockerCompose.Commands.Logs
 {
     /// <summary>
-    /// The builder for <see cref="LogsCommand"/>.
+    /// The builder for <see cref="LogsCommand"/> command.
     /// </summary>
     public sealed class LogsCommandBuilder : CommandBuilderBase<LogsCommand>
 
@@ -19,7 +19,7 @@ namespace Eshva.DockerCompose.Commands.Logs
         /// </returns>
         public LogsCommandBuilder FromAllServices()
         {
-            Command.DoTakeFromAllServices = true;
+            Command.DoForAllServices = true;
             return this;
         }
 
@@ -34,7 +34,7 @@ namespace Eshva.DockerCompose.Commands.Logs
         /// </returns>
         public LogsCommandBuilder FromServices(params string[] services)
         {
-            Command.FromServices.AddRange(services);
+            Command.Services.AddRange(services);
             return this;
         }
 

@@ -81,7 +81,7 @@ namespace Eshva.DockerCompose.Commands
         protected abstract string Command { get; }
 
         /// <summary>
-        /// Prepares arguments of the command for Docker Compose command line interface.
+        /// Prepares arguments of the command for Docker Compose command-line interface.
         /// </summary>
         /// <returns>
         /// Array of Docker Compose arguments.

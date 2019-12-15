@@ -10,10 +10,10 @@ namespace Eshva.DockerCompose.Commands.UpProject
     /// <summary>
     /// Validator for <see cref="UpProjectCommand"/> command.
     /// </summary>
-    public sealed class UpProjectCommandValidator : AbstractValidator<UpProjectCommand>
+    internal sealed class UpProjectCommandValidator : AbstractValidator<UpProjectCommand>
     {
         /// <inheritdoc cref="AbstractValidator{T}"/>
-        public UpProjectCommandValidator()
+        internal UpProjectCommandValidator()
         {
             RuleFor(command => command)
                 .Must(command => !(command.StopAllContainersIfAnyOneStopped && !command.Attached))

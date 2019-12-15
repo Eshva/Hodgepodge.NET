@@ -1,31 +1,20 @@
-#region Usings
-
-using System.Linq;
-using FluentValidation;
-
-#endregion
-
-
 namespace Eshva.DockerCompose.Commands.StopServices
 {
     /// <summary>
-    /// Validator for the <see cref="StopServicesCommand"/>.
+    /// Validator for the <see cref="StopServicesCommand"/> command.
     /// </summary>
-    public sealed class StopServicesCommandValidator : AbstractValidator<StopServicesCommand>
+    internal sealed class StopServicesCommandValidator : ServicesCommandValidatorBase<StopServicesCommand>
     {
-        /// <inheritdoc cref="AbstractValidator{T}"/>
-        public StopServicesCommandValidator()
+        /// <inheritdoc cref="ServicesCommandValidatorBase{TCommand}"/>
+        internal StopServicesCommandValidator() : base(BothSpecifiedErrorMessage, NoneSpecifiedErrorMessage)
         {
-            RuleFor(command => command)
-                .Must(command => !(command.DoStopAllServices && command.Services.Any()))
-                .WithMessage(
-                    "It's not allowed to configure all services and specify to stop some of them. " +
-                    "StopAllServices and StopServices shouldn't be used together.");
-            RuleFor(command => command)
-                .Must(command => command.DoStopAllServices || command.Services.Any())
-                .WithMessage(
-                    "You should specify to stop all services or some of them. " +
-                    "Use StopAllServices or StopServices method.");
         }
+
+        private const string BothSpecifiedErrorMessage =
+            "It's not allowed to configure all services and specify to stop some of them. " +
+            "StopAllServices and StopServices shouldn't be used together.";
+        private const string NoneSpecifiedErrorMessage =
+            "You should specify to stop all services or some of them. " +
+            "Use StopAllServices or StopServices method.";
     }
 }

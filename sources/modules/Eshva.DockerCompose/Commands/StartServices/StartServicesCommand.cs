@@ -1,7 +1,6 @@
 #region Usings
 
 using System.Collections.Generic;
-using Eshva.DockerCompose.Extensions;
 using Eshva.DockerCompose.Infrastructure;
 using FluentValidation;
 
@@ -13,7 +12,7 @@ namespace Eshva.DockerCompose.Commands.StartServices
     /// <summary>
     /// Starts existing containers for services.
     /// </summary>
-    public sealed class StartServicesCommand : CommandBase
+    public sealed class StartServicesCommand : ServicesCommandBase
     {
         /// <inheritdoc cref="CommandBase"/>
         private StartServicesCommand(IProcessStarter starter, params string[] files) : base(starter, files)
@@ -54,21 +53,16 @@ namespace Eshva.DockerCompose.Commands.StartServices
 
         internal bool DoStartAllServices { get; set; }
 
-        internal List<string> Services { get; } = new List<string>();
-
         /// <inheritdoc cref="CommandBase.CreateValidator"/>
         protected internal override IValidator CreateValidator() => new StartServicesCommandValidator();
 
         /// <inheritdoc cref="CommandBase.Command"/>
         protected override string Command { get; } = "start";
 
-        /// <inheritdoc cref="CommandBase.PrepareArguments"/>
-        protected override string[] PrepareArguments()
+        /// <inheritdoc cref="ServicesCommandBase.PrepareOptions"/>
+        protected override string[] PrepareOptions()
         {
-            var arguments = new List<string>();
-            var services = string.Join(" ", Services);
-            arguments.AddConditionally(!string.IsNullOrWhiteSpace(services), services);
-            return arguments.ToArray();
+            return new string[0];
         }
     }
 }

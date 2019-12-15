@@ -14,7 +14,7 @@ namespace Eshva.DockerCompose.Commands.StopServices
     /// <summary>
     /// Stops running containers without removing them. They can be started again with <see cref="StartServicesCommand"/>.
     /// </summary>
-    public sealed class StopServicesCommand : CommandBase
+    public sealed class StopServicesCommand : ServicesCommandBase
     {
         /// <inheritdoc cref="CommandBase"/>
         private StopServicesCommand(IProcessStarter starter, params string[] files) : base(starter, files)
@@ -53,10 +53,6 @@ namespace Eshva.DockerCompose.Commands.StopServices
         public static StopServicesCommandBuilder WithFilesAndStarter(IProcessStarter starter, params string[] files) =>
             new StopServicesCommandBuilder(new StopServicesCommand(starter, files));
 
-        internal bool DoStopAllServices { get; set; }
-
-        internal List<string> Services { get; } = new List<string>();
-
         /// <inheritdoc cref="CommandBase.CreateValidator"/>
         protected internal override IValidator CreateValidator() => new StopServicesCommandValidator();
 
@@ -65,16 +61,14 @@ namespace Eshva.DockerCompose.Commands.StopServices
         /// <inheritdoc cref="CommandBase.Command"/>
         protected override string Command { get; } = "stop";
 
-        /// <inheritdoc cref="CommandBase.PrepareArguments"/>
-        protected override string[] PrepareArguments()
+        /// <inheritdoc cref="ServicesCommandBase.PrepareOptions"/>
+        protected override string[] PrepareOptions()
         {
-            var arguments = new List<string>();
-            var services = string.Join(" ", Services);
-            arguments.AddConditionally(
+            var options = new List<string>();
+            options.AddConditionally(
                 ShutdownTimeoutSeconds != Default.ShutdownTimeoutSeconds,
                 $"--timeout {ShutdownTimeoutSeconds}");
-            arguments.AddConditionally(!string.IsNullOrWhiteSpace(services), services);
-            return arguments.ToArray();
+            return options.ToArray();
         }
 
         private static class Default
