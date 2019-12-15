@@ -9,6 +9,9 @@ using Eshva.DockerCompose.Infrastructure;
 
 namespace Eshva.DockerCompose.Commands
 {
+    /// <summary>
+    /// Base class for commands with list of services.
+    /// </summary>
     public abstract class ServicesCommandBase : CommandBase
     {
         /// <inheritdoc cref="CommandBase"/>
@@ -21,10 +24,17 @@ namespace Eshva.DockerCompose.Commands
         {
         }
 
+        /// <summary>
+        /// Gets or sets should command be applied for all services in the project or don't.
+        /// </summary>
         internal bool DoForAllServices { get; set; }
 
+        /// <summary>
+        /// Gets list of selected services this command should be applied to.
+        /// </summary>
         internal List<string> Services { get; } = new List<string>();
 
+        /// <inheritdoc cref="CommandBase.PrepareArguments"/>
         protected sealed override string[] PrepareArguments()
         {
             var arguments = new List<string>(PrepareOptions());
@@ -36,6 +46,10 @@ namespace Eshva.DockerCompose.Commands
             return arguments.ToArray();
         }
 
+        /// <summary>
+        /// Prepare options of the command for Docker Compose command-line interface.
+        /// </summary>
+        /// <returns></returns>
         protected abstract string[] PrepareOptions();
     }
 }
