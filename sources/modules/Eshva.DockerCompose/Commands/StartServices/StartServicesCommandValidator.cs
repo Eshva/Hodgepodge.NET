@@ -1,31 +1,20 @@
-#region Usings
-
-using System.Linq;
-using FluentValidation;
-
-#endregion
-
-
 namespace Eshva.DockerCompose.Commands.StartServices
 {
     /// <summary>
-    /// Validator for the <see cref="StartServicesCommand"/>.
+    /// Validator for the <see cref="StartServicesCommand"/> command.
     /// </summary>
-    public sealed class StartServicesCommandValidator : AbstractValidator<StartServicesCommand>
+    public sealed class StartServicesCommandValidator : ServicesCommandValidatorBase<StartServicesCommand>
     {
-        /// <inheritdoc cref="AbstractValidator{T}"/>
-        public StartServicesCommandValidator()
+        /// <inheritdoc cref="ServicesCommandValidatorBase{TCommand}"/>
+        public StartServicesCommandValidator() : base(BothSpecifiedErrorMessage, NoneSpecifiedErrorMessage)
         {
-            RuleFor(command => command)
-                .Must(command => !(command.DoStartAllServices && command.Services.Any()))
-                .WithMessage(
-                    "It's not allowed to configure all services and specify to start some of them. " +
-                    "StartAllServices and StartServices shouldn't be used together.");
-            RuleFor(command => command)
-                .Must(command => command.DoStartAllServices || command.Services.Any())
-                .WithMessage(
-                    "You should specify to start all services or some of them. " +
-                    "Use StartAllServices or StartServices method.");
         }
+
+        private const string BothSpecifiedErrorMessage =
+            "It's not allowed to start all services and specify to start some of them. " +
+            "StartAllServices and StartServices shouldn't be used together.";
+        private const string NoneSpecifiedErrorMessage =
+            "You should specify to start all services or some of them. " +
+            "Use StartAllServices or StartServices method.";
     }
 }

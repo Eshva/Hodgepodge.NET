@@ -1,10 +1,3 @@
-#region Usings
-
-using FluentValidation;
-
-#endregion
-
-
 namespace Eshva.DockerCompose.Commands.Logs
 {
     /// <summary>
@@ -12,7 +5,7 @@ namespace Eshva.DockerCompose.Commands.Logs
     /// </summary>
     public sealed class LogsCommandValidator : ServicesCommandValidatorBase<LogsCommand>
     {
-        /// <inheritdoc cref="AbstractValidator{T}"/>
+        /// <inheritdoc cref="ServicesCommandValidatorBase{TCommand}"/>
         public LogsCommandValidator() : base(BothSpecifiedErrorMessage, NoneSpecifiedErrorMessage)
         {
         }
