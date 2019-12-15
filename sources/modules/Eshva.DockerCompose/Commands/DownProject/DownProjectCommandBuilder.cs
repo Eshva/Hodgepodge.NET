@@ -5,38 +5,35 @@ namespace Eshva.DockerCompose.Commands.DownProject
         internal DownProjectCommandBuilder(DownProjectCommand command) : base(command)
         {
         }
-    }
 
-    public static class DownProjectCommandBuilderExtensions
-    {
-        public static DownProjectCommandBuilder RemoveAllImages(this DownProjectCommandBuilder builder)
+        public DownProjectCommandBuilder RemoveAllImages()
         {
-            builder.Command.RemoveImages = DownProjectCommand.ImageRemovingType.All;
-            return builder;
+            Command.RemoveImages = DownProjectCommand.ImageRemovingType.All;
+            return this;
         }
 
-        public static DownProjectCommandBuilder RemoveLocalImages(this DownProjectCommandBuilder builder)
+        public DownProjectCommandBuilder RemoveLocalImages()
         {
-            builder.Command.RemoveImages = DownProjectCommand.ImageRemovingType.Local;
-            return builder;
+            Command.RemoveImages = DownProjectCommand.ImageRemovingType.Local;
+            return this;
         }
 
-        public static DownProjectCommandBuilder RemoveVolumes(this DownProjectCommandBuilder builder)
+        public DownProjectCommandBuilder RemoveVolumes()
         {
-            builder.Command.RemoveVolumes = true;
-            return builder;
+            Command.RemoveVolumes = true;
+            return this;
         }
 
-        public static DownProjectCommandBuilder RemoveOrphanContainers(this DownProjectCommandBuilder builder)
+        public DownProjectCommandBuilder RemoveOrphanContainers()
         {
-            builder.Command.RemoveOrphanContainers = true;
-            return builder;
+            Command.RemoveOrphanContainers = true;
+            return this;
         }
 
-        public static DownProjectCommandBuilder ShutdownTimeoutSeconds(this DownProjectCommandBuilder builder, int shutdownTimeoutSeconds)
+        public DownProjectCommandBuilder ShutdownTimeoutSeconds(int shutdownTimeoutSeconds)
         {
-            builder.Command.ShutdownTimeoutSeconds = shutdownTimeoutSeconds;
-            return builder;
+            Command.ShutdownTimeoutSeconds = shutdownTimeoutSeconds;
+            return this;
         }
     }
 }
