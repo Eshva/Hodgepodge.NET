@@ -15,10 +15,12 @@ namespace Eshva.DockerCompose.Commands.StartServices
     /// </summary>
     public sealed class StartServicesCommand : CommandBase
     {
+        /// <inheritdoc cref="CommandBase"/>
         private StartServicesCommand(IProcessStarter starter, params string[] files) : base(starter, files)
         {
         }
 
+        /// <inheritdoc cref="CommandBase"/>
         private StartServicesCommand(params string[] files) : base(files)
         {
         }
@@ -54,10 +56,13 @@ namespace Eshva.DockerCompose.Commands.StartServices
 
         internal List<string> Services { get; } = new List<string>();
 
+        /// <inheritdoc cref="CommandBase.CreateValidator"/>
         protected internal override IValidator CreateValidator() => new StartServicesCommandValidator();
 
+        /// <inheritdoc cref="CommandBase.Command"/>
         protected override string Command { get; } = "start";
 
+        /// <inheritdoc cref="CommandBase.PrepareArguments"/>
         protected override string[] PrepareArguments()
         {
             var arguments = new List<string>();

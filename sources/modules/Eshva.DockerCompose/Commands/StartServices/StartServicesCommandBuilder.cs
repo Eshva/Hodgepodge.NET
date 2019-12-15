@@ -5,6 +5,7 @@ namespace Eshva.DockerCompose.Commands.StartServices
     /// </summary>
     public sealed class StartServicesCommandBuilder : CommandBuilderBase<StartServicesCommand>
     {
+        /// <inheritdoc cref="CommandBuilderBase{TCommand}"/>
         internal StartServicesCommandBuilder(StartServicesCommand command) : base(command)
         {
         }

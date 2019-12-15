@@ -8,8 +8,12 @@ using FluentValidation;
 
 namespace Eshva.DockerCompose.Commands.StartServices
 {
+    /// <summary>
+    /// Validator for the <see cref="StartServicesCommand"/>.
+    /// </summary>
     public sealed class StartServicesCommandValidator : AbstractValidator<StartServicesCommand>
     {
+        /// <inheritdoc cref="AbstractValidator{T}"/>
         public StartServicesCommandValidator()
         {
             RuleFor(command => command)
