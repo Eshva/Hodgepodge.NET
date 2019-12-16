@@ -16,7 +16,7 @@ namespace Eshva.DockerCompose.Commands.StartServices
         /// <returns>
         /// The same builder.
         /// </returns>
-        public StartServicesCommandBuilder StartAllServices()
+        public StartServicesCommandBuilder AllServices()
         {
             Command.DoForAllServices = true;
             return this;
@@ -31,7 +31,7 @@ namespace Eshva.DockerCompose.Commands.StartServices
         /// <returns>
         /// The same builder.
         /// </returns>
-        public StartServicesCommandBuilder StartServices(params string[] services)
+        public StartServicesCommandBuilder Services(params string[] services)
         {
             Command.Services.AddRange(services);
             return this;

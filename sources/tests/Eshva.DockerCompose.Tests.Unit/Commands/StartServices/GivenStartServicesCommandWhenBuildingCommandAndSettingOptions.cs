@@ -18,7 +18,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.StartServices
         public void ShouldBuildCommandThatStartsAllServicesInProject()
         {
             TestOption(
-                builder => builder.StartAllServices(),
+                builder => builder.AllServices(),
                 arguments => arguments.Equals("-f \"file1\" -f \"file2\" start", StringComparison.OrdinalIgnoreCase));
         }
 
@@ -26,7 +26,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.StartServices
         public void ShouldBuildCommandThatStartsSomeServicesInProject()
         {
             TestOption(
-                builder => builder.StartServices("service1", "service2", "service3"),
+                builder => builder.Services("service1", "service2", "service3"),
                 arguments => arguments.EndsWith("service1 service2 service3", StringComparison.OrdinalIgnoreCase));
         }
 
