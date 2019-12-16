@@ -18,7 +18,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.RestartServices
         public void ShouldBuildCommandThatRestartsAllServicesInProject()
         {
             TestOption(
-                builder => builder.RestartAllServices(),
+                builder => builder.AllServices(),
                 arguments => arguments.Equals("-f \"file1\" -f \"file2\" restart", StringComparison.OrdinalIgnoreCase));
         }
 
@@ -26,7 +26,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.RestartServices
         public void ShouldBuildCommandThatRestartsSomeServicesInProject()
         {
             TestOption(
-                builder => builder.RestartServices("service1", "service2", "service3"),
+                builder => builder.Services("service1", "service2", "service3"),
                 arguments => arguments.EndsWith("service1 service2 service3", StringComparison.OrdinalIgnoreCase));
         }
 
@@ -34,7 +34,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.RestartServices
         public void ShouldBuildCommandThatHasShutdownTimeout()
         {
             TestOption(
-                builder => builder.RestartServices("service1").ShutdownTimeoutSeconds(111),
+                builder => builder.Services("service1").ShutdownTimeoutSeconds(111),
                 arguments => arguments.EndsWith("--timeout 111 service1", StringComparison.OrdinalIgnoreCase));
         }
 

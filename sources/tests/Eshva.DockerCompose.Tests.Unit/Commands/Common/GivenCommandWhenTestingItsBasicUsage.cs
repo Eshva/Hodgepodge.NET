@@ -75,7 +75,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Common
                 "restart",
                 (files, starter) => RestartServicesCommand
                                     .WithFilesAndStarter(starter, files)
-                                    .RestartAllServices()
+                                    .AllServices()
                                     .Build());
         }
 
@@ -86,7 +86,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Common
                 "start",
                 (files, starter) => StartServicesCommand
                                     .WithFilesAndStarter(starter, files)
-                                    .StartAllServices()
+                                    .AllServices()
                                     .Build());
         }
 
@@ -97,7 +97,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Common
                 "stop",
                 (files, starter) => StopServicesCommand
                                     .WithFilesAndStarter(starter, files)
-                                    .StopAllServices()
+                                    .AllServices()
                                     .Build());
         }
 

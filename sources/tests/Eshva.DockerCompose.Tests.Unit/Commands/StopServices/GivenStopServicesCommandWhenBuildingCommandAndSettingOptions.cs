@@ -18,7 +18,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.StopServices
         public void ShouldBuildCommandThatStopsAllServicesInProject()
         {
             TestOption(
-                builder => builder.StopAllServices(),
+                builder => builder.AllServices(),
                 arguments => arguments.Equals("-f \"file1\" -f \"file2\" stop", StringComparison.OrdinalIgnoreCase));
         }
 
@@ -26,7 +26,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.StopServices
         public void ShouldBuildCommandThatStopsSomeServicesInProject()
         {
             TestOption(
-                builder => builder.StopServices("service1", "service2", "service3"),
+                builder => builder.Services("service1", "service2", "service3"),
                 arguments => arguments.EndsWith("service1 service2 service3", StringComparison.OrdinalIgnoreCase));
         }
 
@@ -34,7 +34,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.StopServices
         public void ShouldBuildCommandThatHasShutdownTimeout()
         {
             TestOption(
-                builder => builder.StopServices("service1").ShutdownTimeoutSeconds(111),
+                builder => builder.Services("service1").ShutdownTimeoutSeconds(111),
                 arguments => arguments.EndsWith("--timeout 111 service1", StringComparison.OrdinalIgnoreCase));
         }
 
