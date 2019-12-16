@@ -1,6 +1,5 @@
 #region Usings
 
-using System.Collections.Generic;
 using Eshva.DockerCompose.Infrastructure;
 using FluentValidation;
 
@@ -50,8 +49,6 @@ namespace Eshva.DockerCompose.Commands.StartServices
         /// </returns>
         public static StartServicesCommandBuilder WithFilesAndStarter(IProcessStarter starter, params string[] files) =>
             new StartServicesCommandBuilder(new StartServicesCommand(starter, files));
-
-        internal bool DoStartAllServices { get; set; }
 
         /// <inheritdoc cref="CommandBase.CreateValidator"/>
         protected internal override IValidator CreateValidator() => new StartServicesCommandValidator();
