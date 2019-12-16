@@ -1,9 +1,8 @@
 #region Usings
 
-using System;
 using Eshva.DockerCompose.Commands.UpProject;
 using Eshva.DockerCompose.Infrastructure;
-using Moq;
+using Eshva.DockerCompose.Tests.Unit.Commands.Common;
 using Xunit;
 
 #endregion
@@ -12,6 +11,7 @@ using Xunit;
 namespace Eshva.DockerCompose.Tests.Unit.Commands.UpProject
 {
     public sealed class GivenUpProjectCommandBuilderWhenBuildingCommandAndSettingOptions
+        : SettingOptionsTestBase<UpProjectCommand, UpProjectCommandBuilder>
     {
         [Fact]
         public void ShouldBuildDetachedCommandByDefault()
@@ -141,19 +141,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.UpProject
                 arguments => arguments.Contains("--scale service1=5") && arguments.Contains("--scale service2=10"));
         }
 
-        private static void TestOption(
-            Func<UpProjectCommandBuilder, UpProjectCommandBuilder> configure,
-            Func<string, bool> checkArguments)
-        {
-            var processStarterMock = new Mock<IProcessStarter>();
-            var builder = UpProjectCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
-            var command = configure(builder).Build();
-            command.Execute();
-            processStarterMock.Verify(
-                starter => starter.Start(
-                    It.Is<string>(arguments => checkArguments(arguments)),
-                    TimeSpan.FromDays(1)),
-                Times.Once());
-        }
+        protected override UpProjectCommandBuilder CreateBuilder(IProcessStarter starter, params string[] files) =>
+            UpProjectCommand.WithFilesAndStarter(starter, "file1", "file2");
     }
 }

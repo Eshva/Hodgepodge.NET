@@ -12,7 +12,7 @@ using Xunit;
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit.Commands.BaseClasses
+namespace Eshva.DockerCompose.Tests.Unit.Commands.Common
 {
     public sealed class GivenServicesCommandBaseClassWhenValidatingCommandDuringBuild
     {

@@ -3,7 +3,7 @@
 using System;
 using Eshva.DockerCompose.Commands.RestartServices;
 using Eshva.DockerCompose.Infrastructure;
-using Moq;
+using Eshva.DockerCompose.Tests.Unit.Commands.Common;
 using Xunit;
 
 #endregion
@@ -12,6 +12,7 @@ using Xunit;
 namespace Eshva.DockerCompose.Tests.Unit.Commands.RestartServices
 {
     public sealed class GivenRestartServicesCommandWhenBuildingCommandAndSettingOptions
+        : SettingOptionsTestBase<RestartServicesCommand, RestartServicesCommandBuilder>
     {
         [Fact]
         public void ShouldBuildCommandThatRestartsAllServicesInProject()
@@ -37,19 +38,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.RestartServices
                 arguments => arguments.EndsWith("--timeout 111 service1", StringComparison.OrdinalIgnoreCase));
         }
 
-        private static void TestOption(
-            Func<RestartServicesCommandBuilder, RestartServicesCommandBuilder> configure,
-            Func<string, bool> checkArguments)
-        {
-            var starterMock = new Mock<IProcessStarter>();
-            var builder = RestartServicesCommand.WithFilesAndStarter(starterMock.Object, "file1", "file2");
-            var command = configure(builder).Build();
-            command.Execute();
-            starterMock.Verify(
-                starter => starter.Start(
-                    It.Is<string>(arguments => checkArguments(arguments)),
-                    TimeSpan.FromDays(1)),
-                Times.Once());
-        }
+        protected override RestartServicesCommandBuilder CreateBuilder(IProcessStarter starter, params string[] files) =>
+            RestartServicesCommand.WithFilesAndStarter(starter, files);
     }
 }

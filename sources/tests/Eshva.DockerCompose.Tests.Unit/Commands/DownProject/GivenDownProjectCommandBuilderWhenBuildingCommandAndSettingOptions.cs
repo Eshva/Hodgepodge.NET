@@ -1,9 +1,8 @@
 #region Usings
 
-using System;
 using Eshva.DockerCompose.Commands.DownProject;
 using Eshva.DockerCompose.Infrastructure;
-using Moq;
+using Eshva.DockerCompose.Tests.Unit.Commands.Common;
 using Xunit;
 
 #endregion
@@ -12,6 +11,7 @@ using Xunit;
 namespace Eshva.DockerCompose.Tests.Unit.Commands.DownProject
 {
     public sealed class GivenDownProjectCommandBuilderWhenBuildingCommandAndSettingOptions
+        : SettingOptionsTestBase<DownProjectCommand, DownProjectCommandBuilder>
     {
         [Fact]
         public void ShouldBuildCommandThatRemovesAllImages()
@@ -53,19 +53,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.DownProject
                 arguments => arguments.Contains("--timeout 111"));
         }
 
-        private static void TestOption(
-            Func<DownProjectCommandBuilder, DownProjectCommandBuilder> configure,
-            Func<string, bool> checkArguments)
-        {
-            var processStarterMock = new Mock<IProcessStarter>();
-            var builder = DownProjectCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
-            var command = configure(builder).Build();
-            command.Execute();
-            processStarterMock.Verify(
-                starter => starter.Start(
-                    It.Is<string>(arguments => checkArguments(arguments)),
-                    TimeSpan.FromDays(1)),
-                Times.Once());
-        }
+        protected override DownProjectCommandBuilder CreateBuilder(IProcessStarter starter, params string[] files) =>
+            DownProjectCommand.WithFilesAndStarter(starter, files);
     }
 }
