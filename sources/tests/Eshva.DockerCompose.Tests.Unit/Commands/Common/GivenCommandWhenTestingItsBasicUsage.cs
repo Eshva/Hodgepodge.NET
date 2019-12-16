@@ -4,6 +4,7 @@ using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Eshva.DockerCompose.Commands;
+using Eshva.DockerCompose.Commands.BuildServices;
 using Eshva.DockerCompose.Commands.DownProject;
 using Eshva.DockerCompose.Commands.KillServices;
 using Eshva.DockerCompose.Commands.Logs;
@@ -118,6 +119,17 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Common
                 "up --detach",
                 (files, starter) => UpProjectCommand
                                     .WithFilesAndStarter(starter, files)
+                                    .Build());
+        }
+
+        [Fact]
+        public async Task ShouldAcceptBuildServicesCommand()
+        {
+            await TestBasicCommandUsage(
+                "build",
+                (files, starter) => BuildServicesCommand
+                                    .WithFilesAndStarter(starter, files)
+                                    .AllServices()
                                     .Build());
         }
 
