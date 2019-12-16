@@ -3,7 +3,7 @@
 using System;
 using Eshva.DockerCompose.Commands.StopServices;
 using Eshva.DockerCompose.Infrastructure;
-using Moq;
+using Eshva.DockerCompose.Tests.Unit.Commands.Common;
 using Xunit;
 
 #endregion
@@ -12,6 +12,7 @@ using Xunit;
 namespace Eshva.DockerCompose.Tests.Unit.Commands.StopServices
 {
     public sealed class GivenStopServicesCommandWhenBuildingCommandAndSettingOptions
+        : SettingOptionsTestBase<StopServicesCommand, StopServicesCommandBuilder>
     {
         [Fact]
         public void ShouldBuildCommandThatStopsAllServicesInProject()
@@ -37,20 +38,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.StopServices
                 arguments => arguments.EndsWith("--timeout 111 service1", StringComparison.OrdinalIgnoreCase));
         }
 
-
-        private static void TestOption(
-            Func<StopServicesCommandBuilder, StopServicesCommandBuilder> configure,
-            Func<string, bool> checkArguments)
-        {
-            var starterMock = new Mock<IProcessStarter>();
-            var builder = StopServicesCommand.WithFilesAndStarter(starterMock.Object, "file1", "file2");
-            var command = configure(builder).Build();
-            command.Execute();
-            starterMock.Verify(
-                starter => starter.Start(
-                    It.Is<string>(arguments => checkArguments(arguments)),
-                    TimeSpan.FromDays(1)),
-                Times.Once());
-        }
+        protected override StopServicesCommandBuilder CreateBuilder(IProcessStarter starter, params string[] files) =>
+            StopServicesCommand.WithFilesAndStarter(starter, files);
     }
 }

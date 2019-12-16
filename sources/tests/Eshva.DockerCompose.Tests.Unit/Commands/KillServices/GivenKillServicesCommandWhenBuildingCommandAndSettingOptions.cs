@@ -3,7 +3,7 @@
 using System;
 using Eshva.DockerCompose.Commands.KillServices;
 using Eshva.DockerCompose.Infrastructure;
-using Moq;
+using Eshva.DockerCompose.Tests.Unit.Commands.Common;
 using Xunit;
 
 #endregion
@@ -12,6 +12,7 @@ using Xunit;
 namespace Eshva.DockerCompose.Tests.Unit.Commands.KillServices
 {
     public sealed class GivenKillServicesCommandWhenBuildingCommandAndSettingOptions
+        : SettingOptionsTestBase<KillServicesCommand, KillServicesCommandBuilder>
     {
         [Fact]
         public void ShouldBuildCommandThatKillsAllServicesInProject()
@@ -37,19 +38,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.KillServices
                 arguments => arguments.Contains("-s SIGINT"));
         }
 
-        private static void TestOption(
-            Func<KillServicesCommandBuilder, KillServicesCommandBuilder> configure,
-            Func<string, bool> checkArguments)
-        {
-            var processStarterMock = new Mock<IProcessStarter>();
-            var builder = KillServicesCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
-            var command = configure(builder).Build();
-            command.Execute();
-            processStarterMock.Verify(
-                starter => starter.Start(
-                    It.Is<string>(arguments => checkArguments(arguments)),
-                    TimeSpan.FromDays(1)),
-                Times.Once());
-        }
+        protected override KillServicesCommandBuilder CreateBuilder(IProcessStarter starter, params string[] files) =>
+            KillServicesCommand.WithFilesAndStarter(starter, files);
     }
 }

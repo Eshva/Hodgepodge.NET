@@ -3,7 +3,7 @@
 using System;
 using Eshva.DockerCompose.Commands.StartServices;
 using Eshva.DockerCompose.Infrastructure;
-using Moq;
+using Eshva.DockerCompose.Tests.Unit.Commands.Common;
 using Xunit;
 
 #endregion
@@ -12,6 +12,7 @@ using Xunit;
 namespace Eshva.DockerCompose.Tests.Unit.Commands.StartServices
 {
     public sealed class GivenStartServicesCommandWhenBuildingCommandAndSettingOptions
+        : SettingOptionsTestBase<StartServicesCommand, StartServicesCommandBuilder>
     {
         [Fact]
         public void ShouldBuildCommandThatStartsAllServicesInProject()
@@ -29,19 +30,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.StartServices
                 arguments => arguments.EndsWith("service1 service2 service3", StringComparison.OrdinalIgnoreCase));
         }
 
-        private static void TestOption(
-            Func<StartServicesCommandBuilder, StartServicesCommandBuilder> configure,
-            Func<string, bool> checkArguments)
-        {
-            var processStarterMock = new Mock<IProcessStarter>();
-            var builder = StartServicesCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
-            var command = configure(builder).Build();
-            command.Execute();
-            processStarterMock.Verify(
-                starter => starter.Start(
-                    It.Is<string>(arguments => checkArguments(arguments)),
-                    TimeSpan.FromDays(1)),
-                Times.Once());
-        }
+        protected override StartServicesCommandBuilder CreateBuilder(IProcessStarter starter, params string[] files) =>
+            StartServicesCommand.WithFilesAndStarter(starter, files);
     }
 }

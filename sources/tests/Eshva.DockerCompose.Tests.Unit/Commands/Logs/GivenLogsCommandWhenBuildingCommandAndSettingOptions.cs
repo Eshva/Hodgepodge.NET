@@ -3,7 +3,7 @@
 using System;
 using Eshva.DockerCompose.Commands.Logs;
 using Eshva.DockerCompose.Infrastructure;
-using Moq;
+using Eshva.DockerCompose.Tests.Unit.Commands.Common;
 using Xunit;
 
 #endregion
@@ -11,7 +11,8 @@ using Xunit;
 
 namespace Eshva.DockerCompose.Tests.Unit.Commands.Logs
 {
-    public sealed class GivenLogsCommandWhenBuildingCommandAndSettingOptionsCalled
+    public sealed class GivenLogsCommandWhenBuildingCommandAndSettingOptions
+        : SettingOptionsTestBase<LogsCommand, LogsCommandBuilder>
     {
         [Fact]
         public void ShouldBuildCommandThatTakesLogsFromAllServicesInProject()
@@ -56,19 +57,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Logs
                 arguments => arguments.Contains("--tail 111"));
         }
 
-        private static void TestOption(
-            Func<LogsCommandBuilder, LogsCommandBuilder> configure,
-            Func<string, bool> checkArguments)
-        {
-            var processStarterMock = new Mock<IProcessStarter>();
-            var builder = LogsCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
-            var command = configure(builder).Build();
-            command.Execute();
-            processStarterMock.Verify(
-                starter => starter.Start(
-                    It.Is<string>(arguments => checkArguments(arguments)),
-                    TimeSpan.FromDays(1)),
-                Times.Once());
-        }
+        protected override LogsCommandBuilder CreateBuilder(IProcessStarter starter, params string[] files) =>
+            LogsCommand.WithFilesAndStarter(starter, files);
     }
 }
