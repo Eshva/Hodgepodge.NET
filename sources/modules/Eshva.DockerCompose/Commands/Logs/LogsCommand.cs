@@ -12,6 +12,7 @@ namespace Eshva.DockerCompose.Commands.Logs
 {
     /// <summary>
     /// Takes log output from services in project.
+    /// More info about this command find is here: https://docs.docker.com/compose/reference/logs/
     /// </summary>
     public sealed class LogsCommand : ServicesCommandBase
     {

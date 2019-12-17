@@ -23,6 +23,7 @@ namespace Eshva.DockerCompose.Commands.RestartServices
     /// refer to restart in Compose file v3 and restart in Compose v2.Note that
     /// if you are deploying a stack in swarm mode, you should use restart_policy,
     /// instead.</para>
+    /// More info about this command find is here: https://docs.docker.com/compose/reference/restart/
     /// </remarks>
     public sealed class RestartServicesCommand : ServicesCommandBase
     {

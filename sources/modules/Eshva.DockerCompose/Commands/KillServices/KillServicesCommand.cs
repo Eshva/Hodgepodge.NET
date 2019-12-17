@@ -13,6 +13,7 @@ namespace Eshva.DockerCompose.Commands.KillServices
 {
     /// <summary>
     /// Forces running containers to stop by sending a SIGKILL signal. Optionally the signal can be passed.
+    /// More info about this command find is here: https://docs.docker.com/compose/reference/kill/
     /// </summary>
     public sealed class KillServicesCommand : ServicesCommandBase
     {

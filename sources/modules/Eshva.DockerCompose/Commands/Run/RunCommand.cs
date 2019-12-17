@@ -14,6 +14,7 @@ namespace Eshva.DockerCompose.Commands.Run
 {
     /// <summary>
     /// Runs a one-time command against a service.
+    /// More info about this command find is here: https://docs.docker.com/compose/reference/run/
     /// </summary>
     public sealed class RunCommand : CommandBase
     {

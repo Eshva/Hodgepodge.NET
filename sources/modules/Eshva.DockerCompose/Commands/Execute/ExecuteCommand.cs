@@ -14,6 +14,7 @@ namespace Eshva.DockerCompose.Commands.Execute
 {
     /// <summary>
     /// Execute arbitrary command in a service container.
+    /// More info about this command find is here: https://docs.docker.com/compose/reference/exec/
     /// </summary>
     /// <remarks>
     /// By default the command executed in detached mode as it's more useful for testing purposes.

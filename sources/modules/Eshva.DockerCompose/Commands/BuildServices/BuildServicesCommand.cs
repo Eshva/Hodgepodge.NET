@@ -13,6 +13,7 @@ namespace Eshva.DockerCompose.Commands.BuildServices
 {
     /// <summary>
     /// Builds containers for services.
+    /// More info about this command find here: https://docs.docker.com/compose/reference/build/
     /// </summary> 
     public sealed class BuildServicesCommand : ServicesCommandBase
     {
