@@ -77,9 +77,6 @@ namespace Eshva.DockerCompose.Commands.Run
 
         internal string NameContainerAs { get; set; } = Default.NameContainerAs;
 
-        /// <inheritdoc cref="CommandBase.Command"/>
-        protected override string Command { get; } = "run";
-
         internal string OverrideEntryPointWith { get; set; } = Default.OverrideEntryPointWith;
 
         internal bool DoNotStartLinkedServices { get; set; } = Default.DoNotStartLinkedServices;
@@ -93,6 +90,9 @@ namespace Eshva.DockerCompose.Commands.Run
         internal Dictionary<string, string> PortMappings { get; } = new Dictionary<string, string>();
 
         internal Dictionary<string, string> Labels { get; } = new Dictionary<string, string>();
+
+        /// <inheritdoc cref="CommandBase.Command"/>
+        protected override string Command { get; } = "run";
 
         /// <inheritdoc cref="ServicesCommandBase.PrepareOptions"/>
         protected override string[] PrepareArguments()
@@ -117,7 +117,7 @@ namespace Eshva.DockerCompose.Commands.Run
                 RemoveContainerAfterRun != Default.RemoveContainerAfterRun,
                 "--rm");
             arguments.AddConditionally(
-                AsUser != Default.AsUser,
+                !string.Equals(AsUser, Default.AsUser, StringComparison.OrdinalIgnoreCase),
                 $"--user {AsUser}");
             arguments.AddConditionally(
                 WithoutTty != Default.WithoutTty,

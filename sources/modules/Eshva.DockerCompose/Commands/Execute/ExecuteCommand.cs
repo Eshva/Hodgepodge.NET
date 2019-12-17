@@ -104,7 +104,7 @@ namespace Eshva.DockerCompose.Commands.Execute
                 WithExtendedPrivileges != Default.WithExtendedPrivileges,
                 "--privileged");
             arguments.AddConditionally(
-                AsUser != Default.AsUser,
+                !AsUser.Equals(Default.AsUser, StringComparison.OrdinalIgnoreCase),
                 $"--user {AsUser}");
             arguments.AddConditionally(
                 WithoutTty != Default.WithoutTty,
