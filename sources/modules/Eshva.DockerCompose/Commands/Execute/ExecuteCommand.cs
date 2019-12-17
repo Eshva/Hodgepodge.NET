@@ -63,7 +63,7 @@ namespace Eshva.DockerCompose.Commands.Execute
 
         internal List<string> CommandArguments { get; } = new List<string>();
 
-        internal bool Attached { get; set; } = Default.Attached;
+        internal bool Detached { get; set; } = Default.Detached;
 
         internal bool WithExtendedPrivileges { get; set; } = Default.WithExtendedPrivileges;
 
@@ -98,7 +98,7 @@ namespace Eshva.DockerCompose.Commands.Execute
         private void AddOptions(IList<string> arguments)
         {
             arguments.AddConditionally(
-                Attached == Default.Attached,
+                Detached != Default.Detached,
                 "--detach");
             arguments.AddConditionally(
                 WithExtendedPrivileges != Default.WithExtendedPrivileges,
@@ -134,7 +134,7 @@ namespace Eshva.DockerCompose.Commands.Execute
         {
             public const string InService = "";
             public const string CommandExecutable = "";
-            public const bool Attached = false;
+            public const bool Detached = false;
             public const bool WithExtendedPrivileges = false;
             public const string AsUser = "";
             public const bool WithoutTty = false;

@@ -60,14 +60,14 @@ namespace Eshva.DockerCompose.Commands.Execute
         }
 
         /// <summary>
-        /// Execute command in the attached mode.
+        /// Execute command in the detached mode.
         /// </summary>
         /// <returns>
         /// The same builder.
         /// </returns>
-        public ExecuteCommandBuilder Attached()
+        public ExecuteCommandBuilder Detached()
         {
-            Command.Attached = true;
+            Command.Detached = true;
             return this;
         }
 

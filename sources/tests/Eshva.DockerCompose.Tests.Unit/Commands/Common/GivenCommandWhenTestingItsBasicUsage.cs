@@ -139,7 +139,7 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Common
         public async Task ShouldAcceptExecuteCommand()
         {
             await TestBasicCommandUsage(
-                "exec --detach service1 exec1",
+                "exec service1 exec1",
                 (files, starter) => ExecuteCommand
                                     .WithFilesAndStarter(starter, files)
                                     .InService("service1")
