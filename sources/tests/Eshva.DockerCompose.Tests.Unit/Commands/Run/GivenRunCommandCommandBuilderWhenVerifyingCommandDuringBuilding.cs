@@ -1,7 +1,7 @@
 #region Usings
 
 using System;
-using Eshva.DockerCompose.Commands.Execute;
+using Eshva.DockerCompose.Commands.Run;
 using Eshva.DockerCompose.Exceptions;
 using Eshva.DockerCompose.Infrastructure;
 using FluentAssertions;
@@ -11,9 +11,9 @@ using Xunit;
 #endregion
 
 
-namespace Eshva.DockerCompose.Tests.Unit.Commands.Execute
+namespace Eshva.DockerCompose.Tests.Unit.Commands.Run
 {
-    public sealed class GivenExecuteCommandCommandBuilderWhenVerifyingCommandDuringBuilding
+    public sealed class GivenRunCommandCommandBuilderWhenVerifyingCommandDuringBuilding
     {
         [Fact]
         public void ShouldRequireProvidingServiceName()
@@ -32,11 +32,11 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Execute
         }
 
         private static void ValidateOptions(
-            Func<ExecuteCommandBuilder, ExecuteCommandBuilder> configure,
+            Func<RunCommandBuilder, RunCommandBuilder> configure,
             Func<string, bool> validateOptions)
         {
             var processStarterMock = new Mock<IProcessStarter>();
-            var builder = ExecuteCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
+            var builder = RunCommand.WithFilesAndStarter(processStarterMock.Object, "file1", "file2");
             Action build = () => configure(builder).Build();
             build.Should().ThrowExactly<CommandBuildException>()
                  .Which.Errors.Should().Contain(error => validateOptions(error));

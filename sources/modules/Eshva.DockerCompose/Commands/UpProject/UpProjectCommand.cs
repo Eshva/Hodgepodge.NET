@@ -1,5 +1,6 @@
 #region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Eshva.DockerCompose.Extensions;
@@ -138,7 +139,7 @@ namespace Eshva.DockerCompose.Commands.UpProject
                 ShutdownTimeoutSeconds != Default.ShutdownTimeoutSeconds,
                 $"--timeout {ShutdownTimeoutSeconds}");
             arguments.AddConditionally(
-                TakeExitCodeFromService != Default.TakeExitCodeFromService,
+                !string.Equals(TakeExitCodeFromService, Default.TakeExitCodeFromService, StringComparison.OrdinalIgnoreCase),
                 $"--exit-code-from {TakeExitCodeFromService}");
             arguments.AddConditionally(
                 Scaling.Count > 0,

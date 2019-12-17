@@ -11,6 +11,7 @@ using Eshva.DockerCompose.Commands.KillServices;
 using Eshva.DockerCompose.Commands.Logs;
 using Eshva.DockerCompose.Commands.PauseServices;
 using Eshva.DockerCompose.Commands.RestartServices;
+using Eshva.DockerCompose.Commands.Run;
 using Eshva.DockerCompose.Commands.StartServices;
 using Eshva.DockerCompose.Commands.StopServices;
 using Eshva.DockerCompose.Commands.UnpauseServices;
@@ -138,8 +139,20 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Common
         public async Task ShouldAcceptExecuteCommand()
         {
             await TestBasicCommandUsage(
-                "exec --detach service1 exec1",
+                "exec service1 exec1",
                 (files, starter) => ExecuteCommand
+                                    .WithFilesAndStarter(starter, files)
+                                    .InService("service1")
+                                    .CommandWithArguments("exec1")
+                                    .Build());
+        }
+
+        [Fact]
+        public async Task ShouldAcceptRunCommand()
+        {
+            await TestBasicCommandUsage(
+                "run service1 exec1",
+                (files, starter) => RunCommand
                                     .WithFilesAndStarter(starter, files)
                                     .InService("service1")
                                     .CommandWithArguments("exec1")

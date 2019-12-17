@@ -42,29 +42,29 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Execute
                                   .CommandWithArguments("exec1", "--arg1", "--arg2")
                                   .WithExtendedPrivileges(),
                 arguments => arguments.EndsWith(
-                    "exec --detach --privileged service1 exec1 --arg1 --arg2",
+                    "exec --privileged service1 exec1 --arg1 --arg2",
                     StringComparison.CurrentCulture));
         }
 
         [Fact]
-        public void ShouldBuildDetachedCommandByDefault()
+        public void ShouldBuildAttachedCommandByDefault()
         {
             TestOption(
                 builder => builder
-                           .InService("service1")
-                           .CommandWithArguments("exec1"),
-                arguments => arguments.Contains("--detach"));
-        }
-
-        [Fact]
-        public void ShouldBuildAttachedCommand()
-        {
-            TestOption(
-                builder => builder
-                           .Attached()
                            .InService("service1")
                            .CommandWithArguments("exec1"),
                 arguments => !arguments.Contains("--detach") && !arguments.Contains("-d"));
+        }
+
+        [Fact]
+        public void ShouldBuildDetachedCommand()
+        {
+            TestOption(
+                builder => builder
+                           .Detached()
+                           .InService("service1")
+                           .CommandWithArguments("exec1"),
+                arguments => arguments.Contains("--detach"));
         }
 
         [Fact]

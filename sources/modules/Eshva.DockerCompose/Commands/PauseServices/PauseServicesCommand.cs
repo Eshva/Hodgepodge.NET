@@ -10,6 +10,7 @@ namespace Eshva.DockerCompose.Commands.PauseServices
 {
     /// <summary>
     /// Pauses running containers of a service.
+    /// More info about this command find is here: https://docs.docker.com/compose/reference/pause/
     /// </summary>
     public sealed class PauseServicesCommand : ServicesCommandBase
     {

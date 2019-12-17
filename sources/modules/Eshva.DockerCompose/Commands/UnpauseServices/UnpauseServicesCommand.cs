@@ -10,6 +10,7 @@ namespace Eshva.DockerCompose.Commands.UnpauseServices
 {
     /// <summary>
     /// Unpauses running containers of a service.
+    /// More info about this command find is here: https://docs.docker.com/compose/reference/unpause/
     /// </summary>
     public sealed class UnpauseServicesCommand : ServicesCommandBase
     {

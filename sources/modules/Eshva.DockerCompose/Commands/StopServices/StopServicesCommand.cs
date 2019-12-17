@@ -13,6 +13,7 @@ namespace Eshva.DockerCompose.Commands.StopServices
 {
     /// <summary>
     /// Stops running containers without removing them. They can be started again with <see cref="StartServicesCommand"/>.
+    /// More info about this command find is here: https://docs.docker.com/compose/reference/stop/
     /// </summary>
     public sealed class StopServicesCommand : ServicesCommandBase
     {

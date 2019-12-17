@@ -10,6 +10,7 @@ namespace Eshva.DockerCompose.Commands.StartServices
 {
     /// <summary>
     /// Starts existing containers for services.
+    /// More info about this command find is here: https://docs.docker.com/compose/reference/start/
     /// </summary>
     public sealed class StartServicesCommand : ServicesCommandBase
     {
