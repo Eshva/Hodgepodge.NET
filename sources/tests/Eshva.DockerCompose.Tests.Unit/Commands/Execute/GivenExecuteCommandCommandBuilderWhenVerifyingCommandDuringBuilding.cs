@@ -23,6 +23,14 @@ namespace Eshva.DockerCompose.Tests.Unit.Commands.Execute
                 error => error.Contains("InService", StringComparison.OrdinalIgnoreCase));
         }
 
+        [Fact]
+        public void ShouldRequireCommandToExecute()
+        {
+            ValidateOptions(
+                builder => builder,
+                error => error.Contains("CommandWithArguments", StringComparison.OrdinalIgnoreCase));
+        }
+
         private static void ValidateOptions(
             Func<ExecuteCommandBuilder, ExecuteCommandBuilder> configure,
             Func<string, bool> validateOptions)
