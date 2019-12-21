@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{7A2657D1-F138-42FC-874A-B00474BBAED1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Hodgepodge.LearningRedis", "samples\Eshva.Hodgepodge.LearningRedis\Eshva.Hodgepodge.LearningRedis.csproj", "{335FC310-A991-45C2-A11F-80AC9B6E0A93}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Hodgepodge", "Eshva.Hodgepodge\Eshva.Hodgepodge.csproj", "{32EFCD0D-3FD9-4542-9E61-7F076DFF613F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Hodgepodge.Tests.Unit", "Eshva.Hodgepodge.Tests.Unit\Eshva.Hodgepodge.Tests.Unit.csproj", "{6A5C2B76-8D13-4CA5-A7AD-81A0325FE894}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{335FC310-A991-45C2-A11F-80AC9B6E0A93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{335FC310-A991-45C2-A11F-80AC9B6E0A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{335FC310-A991-45C2-A11F-80AC9B6E0A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{335FC310-A991-45C2-A11F-80AC9B6E0A93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32EFCD0D-3FD9-4542-9E61-7F076DFF613F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32EFCD0D-3FD9-4542-9E61-7F076DFF613F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32EFCD0D-3FD9-4542-9E61-7F076DFF613F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32EFCD0D-3FD9-4542-9E61-7F076DFF613F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A5C2B76-8D13-4CA5-A7AD-81A0325FE894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A5C2B76-8D13-4CA5-A7AD-81A0325FE894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A5C2B76-8D13-4CA5-A7AD-81A0325FE894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A5C2B76-8D13-4CA5-A7AD-81A0325FE894}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{335FC310-A991-45C2-A11F-80AC9B6E0A93} = {7A2657D1-F138-42FC-874A-B00474BBAED1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32293400-5BB3-4912-9640-21B02E119DAC}
+	EndGlobalSection
+EndGlobal
