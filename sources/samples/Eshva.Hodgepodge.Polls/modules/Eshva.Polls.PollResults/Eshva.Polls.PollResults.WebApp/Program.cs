@@ -1,3 +1,11 @@
+#region Usings
+
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
+#endregion
+
+
 namespace Eshva.Polls.PollResults.WebApp
 {
     public class Program
