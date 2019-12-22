@@ -61,7 +61,9 @@ namespace Eshva.Hodgepodge.LearningRedis
 
         protected override Task PrepareFixture()
         {
-            Redis = ConnectionMultiplexer.Connect($"{ServerHost}:{ServerPort}");
+            var options = new ConfigurationOptions { AllowAdmin = true };
+            options.EndPoints.Add(ServerHost, ServerPort);
+            Redis = ConnectionMultiplexer.Connect(options);
             Server = Redis.GetServer(ServerHost, ServerPort);
             return Task.CompletedTask;
         }
