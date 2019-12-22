@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{1509452C-E723-4DAF-8BF7-B47D034D096C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D1F97912-F4D2-4EE6-A807-A36459CC945B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eshva.Polls.Client", "Eshva.Polls.Client", "{D262DA55-449B-4775-A505-F5BE849EEB60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eshva.Polls.Admin", "Eshva.Polls.Admin", "{05905222-B0FA-4408-85C6-56EDC34C9E5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eshva.Polls.Configuration", "Eshva.Polls.Configuration", "{DDE9D0FB-1A6B-49A3-9A12-8B82AE082676}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eshva.Polls.PollResults", "Eshva.Polls.PollResults", "{ACC6769F-DD00-4902-87A4-E43AF1B375B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshva.Polls.PollResults.WebApp", "modules\Eshva.Polls.PollResults\Eshva.Polls.PollResults.WebApp\Eshva.Polls.PollResults.WebApp.csproj", "{3E5E5B0D-623B-47E4-8DD2-C115E9539184}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Polls.Admin.WebApp", "modules\Eshva.Polls.Admin\Eshva.Polls.Admin.WebApp\Eshva.Polls.Admin.WebApp.csproj", "{B3211696-65E3-4C4D-BFB5-9B88D600DD15}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Polls.Client.WebApp", "modules\Eshva.Polls.Client\Eshva.Polls.Client.WebApp\Eshva.Polls.Client.WebApp.csproj", "{822C0313-691C-4AF6-BD7A-5305A97501B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Polls.Configuration.WebApp", "modules\Eshva.Polls.Configuration\Eshva.Polls.Configuration.WebApp\Eshva.Polls.Configuration.WebApp.csproj", "{0625760C-E0D0-4215-AFA3-617AE01BCEA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshva.Polls.Client.Tests.EndToEnd", "tests\Eshva.Polls.Client.Tests.EndToEnd\Eshva.Polls.Client.Tests.EndToEnd.csproj", "{BFB3C5FF-A065-41A6-AD0D-34C8891A04A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshva.Polls.Admin.Tests.EndToEnd", "tests\Eshva.Polls.Admin.Tests.EndToEnd\Eshva.Polls.Admin.Tests.EndToEnd.csproj", "{CB6F9B63-A348-45D5-B891-681F2C9003B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{8C869422-0702-4CBB-8F08-A19F2D413EDC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Hodgepodge", "..\..\Eshva.Hodgepodge\Eshva.Hodgepodge.csproj", "{CB94F6D6-B20B-456B-AEBF-7E7DD8A7E25D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E5E5B0D-623B-47E4-8DD2-C115E9539184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E5E5B0D-623B-47E4-8DD2-C115E9539184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E5E5B0D-623B-47E4-8DD2-C115E9539184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E5E5B0D-623B-47E4-8DD2-C115E9539184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3211696-65E3-4C4D-BFB5-9B88D600DD15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3211696-65E3-4C4D-BFB5-9B88D600DD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3211696-65E3-4C4D-BFB5-9B88D600DD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3211696-65E3-4C4D-BFB5-9B88D600DD15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{822C0313-691C-4AF6-BD7A-5305A97501B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822C0313-691C-4AF6-BD7A-5305A97501B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822C0313-691C-4AF6-BD7A-5305A97501B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822C0313-691C-4AF6-BD7A-5305A97501B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0625760C-E0D0-4215-AFA3-617AE01BCEA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0625760C-E0D0-4215-AFA3-617AE01BCEA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0625760C-E0D0-4215-AFA3-617AE01BCEA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0625760C-E0D0-4215-AFA3-617AE01BCEA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFB3C5FF-A065-41A6-AD0D-34C8891A04A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB3C5FF-A065-41A6-AD0D-34C8891A04A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB3C5FF-A065-41A6-AD0D-34C8891A04A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB3C5FF-A065-41A6-AD0D-34C8891A04A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB6F9B63-A348-45D5-B891-681F2C9003B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB6F9B63-A348-45D5-B891-681F2C9003B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB6F9B63-A348-45D5-B891-681F2C9003B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB6F9B63-A348-45D5-B891-681F2C9003B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB94F6D6-B20B-456B-AEBF-7E7DD8A7E25D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB94F6D6-B20B-456B-AEBF-7E7DD8A7E25D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB94F6D6-B20B-456B-AEBF-7E7DD8A7E25D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB94F6D6-B20B-456B-AEBF-7E7DD8A7E25D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D262DA55-449B-4775-A505-F5BE849EEB60} = {1509452C-E723-4DAF-8BF7-B47D034D096C}
+		{05905222-B0FA-4408-85C6-56EDC34C9E5A} = {1509452C-E723-4DAF-8BF7-B47D034D096C}
+		{DDE9D0FB-1A6B-49A3-9A12-8B82AE082676} = {1509452C-E723-4DAF-8BF7-B47D034D096C}
+		{ACC6769F-DD00-4902-87A4-E43AF1B375B0} = {1509452C-E723-4DAF-8BF7-B47D034D096C}
+		{3E5E5B0D-623B-47E4-8DD2-C115E9539184} = {ACC6769F-DD00-4902-87A4-E43AF1B375B0}
+		{B3211696-65E3-4C4D-BFB5-9B88D600DD15} = {05905222-B0FA-4408-85C6-56EDC34C9E5A}
+		{822C0313-691C-4AF6-BD7A-5305A97501B0} = {D262DA55-449B-4775-A505-F5BE849EEB60}
+		{0625760C-E0D0-4215-AFA3-617AE01BCEA1} = {DDE9D0FB-1A6B-49A3-9A12-8B82AE082676}
+		{BFB3C5FF-A065-41A6-AD0D-34C8891A04A4} = {D1F97912-F4D2-4EE6-A807-A36459CC945B}
+		{CB6F9B63-A348-45D5-B891-681F2C9003B5} = {D1F97912-F4D2-4EE6-A807-A36459CC945B}
+		{CB94F6D6-B20B-456B-AEBF-7E7DD8A7E25D} = {8C869422-0702-4CBB-8F08-A19F2D413EDC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37F8AFF8-31AC-4BB4-BB5F-60E4FABCC064}
+	EndGlobalSection
+EndGlobal
