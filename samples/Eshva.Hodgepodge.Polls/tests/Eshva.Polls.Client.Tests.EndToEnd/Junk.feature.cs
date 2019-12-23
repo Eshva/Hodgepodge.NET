@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Eshva.Polls.Admin.Tests.EndToEnd
+namespace Eshva.Polls.Client.Tests.EndToEnd
 {
     using TechTalk.SpecFlow;
     using System;
@@ -19,7 +19,7 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.1.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class PutFeature_TitleHereFeature : object, Xunit.IClassFixture<PutFeature_TitleHereFeature.FixtureData>, System.IDisposable
+    public partial class JUNKFeature : object, Xunit.IClassFixture<JUNKFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Template.feature"
+#line 1 "Junk.feature"
 #line hidden
         
-        public PutFeature_TitleHereFeature(PutFeature_TitleHereFeature.FixtureData fixtureData, Eshva_Polls_Admin_Tests_EndToEnd_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public JUNKFeature(JUNKFeature.FixtureData fixtureData, Eshva_Polls_Client_Tests_EndToEnd_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Put feature-title here", "\tPut feature description here", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "JUNK", "\tPut feature description here", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,28 +75,19 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
-        {
-#line 4
-#line hidden
-#line 5
-    testRunner.Given("Put your Background here", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-        }
-        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Put your Scenario here")]
-        [Xunit.TraitAttribute("FeatureTitle", "Put feature-title here")]
-        [Xunit.TraitAttribute("Description", "Put your Scenario here")]
-        public virtual void PutYourScenarioHere()
+        [Xunit.SkippableFactAttribute(DisplayName="JUNKing")]
+        [Xunit.TraitAttribute("FeatureTitle", "JUNK")]
+        [Xunit.TraitAttribute("Description", "JUNKing")]
+        public virtual void JUNKing()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Put your Scenario here", null, ((string[])(null)));
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("JUNKing", null, ((string[])(null)));
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -116,14 +107,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
-this.FeatureBackground();
+#line 5
+ testRunner.When("junk gotten", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 8
- testRunner.When("Put your Action here", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 9
-    testRunner.Then("Put your Condition here", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 6
+    testRunner.Then("junk given", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -136,12 +124,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                PutFeature_TitleHereFeature.FeatureSetup();
+                JUNKFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                PutFeature_TitleHereFeature.FeatureTearDown();
+                JUNKFeature.FeatureTearDown();
             }
         }
     }
