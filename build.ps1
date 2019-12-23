@@ -80,9 +80,6 @@ function MakePackage($packageProject, $artifactsFolder, $versionSuffixOption) {
 }
 
 
-$solutionFile = ".\sources\Eshva.Hodgepodge.sln"
-$packageProject = ".\sources\Eshva.Hodgepodge\Eshva.Hodgepodge.csproj"
-$testProject = ".\sources\Eshva.Hodgepodge.Tests.Unit\Eshva.Hodgepodge.Tests.Unit.csproj"
 $artifactsFolder = ".\artifacts"
 
 $versionSuffix = GetVersionSuffix
@@ -90,6 +87,12 @@ $versionSuffixOption = @{ $true = "--version-suffix=$versionSuffix"; $false = ""
   
 PrintBuildInformation $versionSuffix
 CleanArtifacts $artifactsFolder
-Build $solutionFile $versionSuffixOption
-Test $testProject
-MakePackage $packageProject $artifactsFolder $versionSuffixOption
+Build ".\sources\Eshva.Hodgepodge.sln" $versionSuffixOption
+Build ".\samples\Eshva.Hodgepodge.LearningRedis\Eshva.Hodgepodge.LearningRedis.sln" $versionSuffixOption
+Build ".\samples\Eshva.Hodgepodge.Polls\Eshva.Hodgepodge.Polls.sln" $versionSuffixOption
+
+Test ".\sources\Eshva.Hodgepodge.sln"
+Test ".\samples\Eshva.Hodgepodge.LearningRedis\Eshva.Hodgepodge.LearningRedis.sln"
+Test ".\samples\Eshva.Hodgepodge.Polls\Eshva.Hodgepodge.Polls.sln"
+
+MakePackage ".\sources\Eshva.Hodgepodge\Eshva.Hodgepodge.csproj" $artifactsFolder $versionSuffixOption
