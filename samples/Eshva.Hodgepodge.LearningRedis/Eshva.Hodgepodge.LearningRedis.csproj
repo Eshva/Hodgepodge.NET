@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Eshva.Hodgepodge\Eshva.Hodgepodge.csproj" />
+    <ProjectReference Include="..\..\sources\Eshva.Hodgepodge\Eshva.Hodgepodge.csproj" />
   </ItemGroup>
 
 </Project>
