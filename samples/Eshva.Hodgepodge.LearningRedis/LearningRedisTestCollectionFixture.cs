@@ -18,7 +18,6 @@ using Xunit;
 namespace Eshva.Hodgepodge.LearningRedis
 {
     [UsedImplicitly]
-    [Collection(LearningRedisTestCollection.CollectionName)]
     public sealed class LearningRedisTestCollectionFixture : CollectionFixtureBase
     {
         public ConnectionMultiplexer Redis { get; private set; }
