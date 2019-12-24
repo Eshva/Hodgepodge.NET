@@ -9,4 +9,4 @@ services:
     image: redis:5-alpine
     restart: on-failure
     ports:
-      - 16379:6379
+      - {{redisPort}}:6379
