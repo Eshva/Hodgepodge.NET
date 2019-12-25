@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Eshva.Polls.Admin.Tests.EndToEnd": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+version: "3"
+services:
+  polls-admin-bff:
+    container_name: polls-admin-bff
+    image: polls-admin-bff:latest
+    build:
+      context: ./Eshva.Polls.Admin/Eshva.Polls.Admin.WebApp
+      dockerfile: Dockerfile
+      args:
+        - configuration=Debug
+  polls-configuration-service:
+    container_name: polls-configuration-service
+    image: polls-configuration-service:latest
+    build:
+      context: ./Eshva.Polls.Configuration/Eshva.Polls.Configuration.WebApp
+      dockerfile: Dockerfile
+      args:
+        - configuration=Debug
+  polls-client-bff:
+    container_name: polls-client-bff
+    image: polls-client-bff:latest
+    build:
+      context: ./Eshva.Polls.Client/Eshva.Polls.Client.WebApp
+      dockerfile: Dockerfile
+      args:
+        - configuration=Debug
+  polls-poll-results-service:
+    container_name: polls-poll-results-service
+    image: polls-poll-results-service:latest
+    build:
+      context: ./Eshva.Polls.PollResults/Eshva.Polls.PollResults.WebApp
+      dockerfile: Dockerfile
+      args:
+        - configuration=Debug

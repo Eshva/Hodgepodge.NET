@@ -2,10 +2,10 @@
 
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Eshva.Common.UnitTesting;
+using Eshva.DockerCompose.Commands.BuildServices;
 using Eshva.DockerCompose.Commands.DownProject;
 using Eshva.DockerCompose.Commands.UpProject;
 using Eshva.Hodgepodge;
@@ -27,10 +27,12 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
 
         protected override async Task SetupCollection()
         {
-            var project = BuildDockerFile(await EmbeddedFiles.ReadAsString(ProjectTemplatePath));
-            var projectFilePath = Path.Combine(CollectionFolder, ProjectFileName);
-            await WriteProjectToTestCollectionFolder(project, projectFilePath);
-            await UpDockerComposeFile(projectFilePath);
+            _fullDockerComposeFilePath = Path.Combine(CollectionFolder, Path.Combine(CollectionFolder, ProjectFileName));
+            await BuildServices(BuildServicesDockerComposeFilePathVariableName);
+            await WriteProjectToTestCollectionFolder(
+                GetRuntimeDockerComposeProject(await EmbeddedFiles.ReadAsString(ProjectTemplatePath)),
+                Path.Combine(CollectionFolder, ProjectFileName));
+            await UpDockerComposeFile();
         }
 
         protected override async Task TeardownCollection()
@@ -45,7 +47,7 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
             {
                 try
                 {
-                    ConnectionMultiplexer.Connect($"{ServerHost}:{_serverPort}");
+                    ConnectionMultiplexer.Connect($"{ServerHost}:{_configurationServiceDbPort}");
                     return Task.CompletedTask;
                 }
                 catch
@@ -56,7 +58,7 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
             }
 
             throw new TaskCanceledException(
-                $"Unable to connect to Redis-server at {ServerHost}:{_serverPort} during {GetPreparationTimeout():g}.");
+                $"Unable to connect to Redis-server at {ServerHost}:{_configurationServiceDbPort} during {GetPreparationTimeout():g}.");
         }
 
         protected override TimeSpan GetPreparationTimeout() => TimeSpan.FromSeconds(13);
@@ -64,23 +66,33 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
         protected override Task PrepareFixture()
         {
             var options = new ConfigurationOptions { AllowAdmin = true };
-            options.EndPoints.Add(ServerHost, _serverPort);
+            options.EndPoints.Add(ServerHost, _configurationServiceDbPort);
             Redis = ConnectionMultiplexer.Connect(options);
-            Server = Redis.GetServer(ServerHost, _serverPort);
+            Server = Redis.GetServer(ServerHost, _configurationServiceDbPort);
             return Task.CompletedTask;
         }
 
-        private string BuildDockerFile(string templateContent)
+        private string GetRuntimeDockerComposeProject(string templateContent)
         {
-            var template = Handlebars.Compile(templateContent);
-            _serverPort = FreeTcpPorts.GetPorts().First();
-            var data = new
-                       {
-                           redisPort = _serverPort
-                       };
+            AssignServicePorts();
 
-            var result = template(data);
-            return result;
+            return Handlebars.Compile(templateContent)(
+                new
+                {
+                    pollsAdminBffImage = PollsAdminBffImage,
+                    pollsAdminBffPort = _pollsAdminBffPort,
+                    configurationServiceImage = ConfigurationServiceImage,
+                    configurationServicePort = _configurationServicePort,
+                    configurationServiceDbPort = _configurationServiceDbPort
+                });
+        }
+
+        private void AssignServicePorts()
+        {
+            var ports = FreeTcpPorts.GetPorts(3);
+            _pollsAdminBffPort = ports[0];
+            _configurationServicePort = ports[1];
+            _configurationServiceDbPort = ports[2];
         }
 
         private Task WriteProjectToTestCollectionFolder(string projectFileContent, string projectFilePath)
@@ -90,16 +102,33 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
             return writer.WriteAsync(projectFileContent);
         }
 
-        private async Task UpDockerComposeFile(string dockerComposeFileName)
+        private Task BuildServices(string buildServicesDockerComposeFilePathVariableName)
         {
-            _fullDockerComposeFilePath = Path.Combine(CollectionFolder, dockerComposeFileName);
+            var buildServicesDockerComposeFilePath = Environment.GetEnvironmentVariable(buildServicesDockerComposeFilePathVariableName);
+            return buildServicesDockerComposeFilePath == null
+                ? Task.CompletedTask
+                : BuildServicesCommand.WithFiles(buildServicesDockerComposeFilePath)
+                                      .AllServices()
+                                      .InParallel()
+                                      .RemoveIntermediateContainers()
+                                      .Build()
+                                      .Execute();
+        }
+
+        private async Task UpDockerComposeFile()
+        {
             var upProjectCommand = UpProjectCommand.WithFiles(_fullDockerComposeFilePath).Build();
             await upProjectCommand.Execute(TimeSpan.FromSeconds(10));
         }
 
         private string _fullDockerComposeFilePath;
-        private int _serverPort;
+        private int _configurationServicePort;
+        private int _configurationServiceDbPort;
+        private int _pollsAdminBffPort;
 
+        private const string BuildServicesDockerComposeFilePathVariableName = "EshvaPollsAdminTestsEndToEnd_BuildFilePath";
+        private const string PollsAdminBffImage = "polls-admin-bff:latest";
+        private const string ConfigurationServiceImage = "polls-configuration-service:latest";
         private const string ProjectTemplatePath = "polls-admin-template.yaml";
         private const string ServerHost = "localhost";
         private const string ProjectFileName = "polls-admin.yaml";

@@ -1,12 +1,38 @@
 version: "3"
 services:
-#  admin-bff:
-#    container_name: admin-bff
-#    build:
-#      context: {{insert-here-somehow-absolute-path-to-dockerfile-folder}}
-  redis:
-    container_name: redis
+  polls-admin-bff:
+    container_name: polls-admin-bff
+    image: {{pollsAdminBffImage}}
+    restart: on-failure
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+    ports:
+      - {{pollsAdminBffPort}}:80
+    depends_on:
+      - polls-configuration-service
+    networks:
+      - polls
+
+  polls-configuration-service:
+    container_name: polls-configuration-service
+    image: {{configurationServiceImage}}
+    restart: on-failure
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - POLLS_Database__Host=configuration-service-db
+      - POLLS_Database__Port=6379
+    ports:
+      - {{configurationServicePort}}:80
+    depends_on:
+      - configuration-service-db
+    networks:
+      - polls
+
+  configuration-service-db:
+    container_name: configuration-service-db
     image: redis:5-alpine
     restart: on-failure
     ports:
-      - {{redisPort}}:6379
+      - {{configurationServiceDbPort}}:6379
+    networks:
+      - polls
