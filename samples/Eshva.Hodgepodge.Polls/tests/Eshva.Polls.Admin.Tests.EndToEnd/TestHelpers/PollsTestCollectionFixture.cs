@@ -2,6 +2,8 @@
 
 using System;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Eshva.Common.UnitTesting;
@@ -43,22 +45,26 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
 
         protected override Task WaitCollectionReady(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
+            using var httpClient = new HttpClient();
+            try
             {
-                try
-                {
-                    ConnectionMultiplexer.Connect($"{ServerHost}:{_configurationServiceDbPort}");
-                    return Task.CompletedTask;
-                }
-                catch
-                {
-                    Console.WriteLine("Waiting for Redis 0.1s...");
-                    Task.Delay(TimeSpan.FromMilliseconds(100), cancellationToken);
-                }
+                Task.WaitAll(
+                    new[]
+                    {
+                        WaitRedisReady(),
+                        WaitServiceReady(_pollsAdminBffUri, httpClient, cancellationToken),
+                        WaitServiceReady(_configurationServiceUri, httpClient, cancellationToken)
+                    },
+                    cancellationToken);
+            }
+            catch (Exception exception)
+            {
+                throw new TaskCanceledException(
+                    $"Unable to make all components ready during {GetPreparationTimeout():g}.",
+                    exception);
             }
 
-            throw new TaskCanceledException(
-                $"Unable to connect to Redis-server at {ServerHost}:{_configurationServiceDbPort} during {GetPreparationTimeout():g}.");
+            return Task.CompletedTask;
         }
 
         protected override TimeSpan GetPreparationTimeout() => TimeSpan.FromSeconds(13);
@@ -70,6 +76,44 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
             Redis = ConnectionMultiplexer.Connect(options);
             Server = Redis.GetServer(ServerHost, _configurationServiceDbPort);
             return Task.CompletedTask;
+        }
+
+        private async Task WaitServiceReady(Uri serviceUri, HttpClient httpClient, CancellationToken cancellationToken)
+        {
+            var serviceReadinessProbeUri = new Uri(serviceUri, "readiness");
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                try
+                {
+                    var responseMessage = await httpClient.GetAsync(serviceReadinessProbeUri, cancellationToken);
+                    if (responseMessage.StatusCode == HttpStatusCode.OK)
+                    {
+                        return;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine($"Error: {exception}");
+                    Console.WriteLine("Waiting for Redis 100 milliseconds...");
+                    await Task.Delay(TimeSpan.FromMilliseconds(100), cancellationToken);
+                }
+            }
+
+            throw new TaskCanceledException(
+                $"Unable to connect to service at {serviceReadinessProbeUri.AbsoluteUri} during {GetPreparationTimeout():g}.");
+        }
+
+        private Task WaitRedisReady() => ConnectionMultiplexer.ConnectAsync(CreateDbConnectionConfigurationOptions());
+
+        private ConfigurationOptions CreateDbConnectionConfigurationOptions()
+        {
+            var options =
+                new ConfigurationOptions
+                {
+                    ConnectTimeout = (int)GetPreparationTimeout().TotalMilliseconds
+                };
+            options.EndPoints.Add(ServerHost, _configurationServiceDbPort);
+            return options;
         }
 
         private string GetRuntimeDockerComposeProject(string templateContent)
@@ -91,7 +135,9 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
         {
             var ports = FreeTcpPorts.GetPorts(3);
             _pollsAdminBffPort = ports[0];
+            _pollsAdminBffUri = new Uri($"http://localhost:{_pollsAdminBffPort}");
             _configurationServicePort = ports[1];
+            _configurationServiceUri = new Uri($"http://localhost:{_configurationServicePort}");
             _configurationServiceDbPort = ports[2];
         }
 
@@ -124,6 +170,8 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
         private int _configurationServicePort;
         private int _configurationServiceDbPort;
         private int _pollsAdminBffPort;
+        private Uri _pollsAdminBffUri;
+        private Uri _configurationServiceUri = new Uri("http://polls-configuration-service");
 
         private const string BuildServicesDockerComposeFilePathVariableName = "EshvaPollsAdminTestsEndToEnd_BuildFilePath";
         private const string PollsAdminBffImage = "polls-admin-bff:latest";
