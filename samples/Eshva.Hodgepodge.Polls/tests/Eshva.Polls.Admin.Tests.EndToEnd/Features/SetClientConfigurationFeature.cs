@@ -12,7 +12,7 @@ using Xunit;
 namespace Eshva.Polls.Admin.Tests.EndToEnd.Features
 {
     [Collection(PollsTestCollection.CollectionName)]
-    public class SetClientConfigurationFeature
+    public sealed class SetClientConfigurationFeature
     {
         public SetClientConfigurationFeature(PollsTestCollectionFixture collectionFixture)
         {

@@ -4,7 +4,7 @@ services:
     container_name: polls-admin-bff
     image: polls-admin-bff:latest
     build:
-      context: ./Eshva.Polls.Admin/Eshva.Polls.Admin.WebApp
+      context: ./Eshva.Polls.Admin/
       dockerfile: Dockerfile
       args:
         - configuration=Debug
@@ -12,7 +12,7 @@ services:
     container_name: polls-configuration-service
     image: polls-configuration-service:latest
     build:
-      context: ./Eshva.Polls.Configuration/Eshva.Polls.Configuration.WebApp
+      context: ./Eshva.Polls.Configuration/
       dockerfile: Dockerfile
       args:
         - configuration=Debug
@@ -20,7 +20,7 @@ services:
     container_name: polls-client-bff
     image: polls-client-bff:latest
     build:
-      context: ./Eshva.Polls.Client/Eshva.Polls.Client.WebApp
+      context: ./Eshva.Polls.Client/
       dockerfile: Dockerfile
       args:
         - configuration=Debug
@@ -28,7 +28,7 @@ services:
     container_name: polls-poll-results-service
     image: polls-poll-results-service:latest
     build:
-      context: ./Eshva.Polls.PollResults/Eshva.Polls.PollResults.WebApp
+      context: ./Eshva.Polls.PollResults/
       dockerfile: Dockerfile
       args:
         - configuration=Debug

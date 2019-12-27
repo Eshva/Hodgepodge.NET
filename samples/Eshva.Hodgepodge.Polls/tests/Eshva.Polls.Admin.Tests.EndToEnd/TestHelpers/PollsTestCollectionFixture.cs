@@ -109,7 +109,6 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
                 ? Task.CompletedTask
                 : BuildServicesCommand.WithFiles(buildServicesDockerComposeFilePath)
                                       .AllServices()
-                                      .InParallel()
                                       .RemoveIntermediateContainers()
                                       .Build()
                                       .Execute();
