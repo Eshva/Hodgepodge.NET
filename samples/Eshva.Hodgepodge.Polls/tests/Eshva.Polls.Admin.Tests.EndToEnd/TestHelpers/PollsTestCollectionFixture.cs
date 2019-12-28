@@ -27,12 +27,15 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
 
         public IServer Server { get; private set; }
 
+        public HttpClient HttpClient { get; private set; }
+
         protected override async Task SetupCollection()
         {
             _fullDockerComposeFilePath = Path.Combine(CollectionFolder, Path.Combine(CollectionFolder, ProjectFileName));
+            HttpClient = new HttpClient();
             await BuildServices(BuildServicesDockerComposeFilePathVariableName);
             await WriteProjectToTestCollectionFolder(
-                GetRuntimeDockerComposeProject(await EmbeddedFiles.ReadAsString(ProjectTemplatePath)),
+                CreateRuntimeDockerComposeProject(await EmbeddedFiles.ReadAsString(ProjectTemplatePath)),
                 Path.Combine(CollectionFolder, ProjectFileName));
             await UpDockerComposeFile();
         }
@@ -41,19 +44,19 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
         {
             Redis?.Dispose();
             await DownProjectCommand.WithFiles(_fullDockerComposeFilePath).Build().Execute();
+            HttpClient.Dispose();
         }
 
         protected override Task WaitCollectionReady(CancellationToken cancellationToken)
         {
-            using var httpClient = new HttpClient();
             try
             {
                 Task.WaitAll(
                     new[]
                     {
                         WaitRedisReady(),
-                        WaitServiceReady(_pollsAdminBffUri, httpClient, cancellationToken),
-                        WaitServiceReady(_configurationServiceUri, httpClient, cancellationToken)
+                        WaitServiceReady(_pollsAdminBffUri, HttpClient, cancellationToken),
+                        WaitServiceReady(_configurationServiceUri, HttpClient, cancellationToken)
                     },
                     cancellationToken);
             }
@@ -116,7 +119,7 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
             return options;
         }
 
-        private string GetRuntimeDockerComposeProject(string templateContent)
+        private string CreateRuntimeDockerComposeProject(string templateContent)
         {
             AssignServicePorts();
 
