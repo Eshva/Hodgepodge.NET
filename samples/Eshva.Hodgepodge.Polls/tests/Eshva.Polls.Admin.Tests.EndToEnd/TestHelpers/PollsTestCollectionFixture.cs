@@ -166,7 +166,7 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
         private async Task UpDockerComposeFile()
         {
             var upProjectCommand = UpProjectCommand.WithFiles(_fullDockerComposeFilePath).Build();
-            await upProjectCommand.Execute(TimeSpan.FromSeconds(10));
+            await upProjectCommand.Execute(TimeSpan.FromSeconds(20));
         }
 
         private string _fullDockerComposeFilePath;

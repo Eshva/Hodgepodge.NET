@@ -4,31 +4,31 @@ services:
     container_name: polls-admin-bff
     image: polls-admin-bff:latest
     build:
-      context: ./Eshva.Polls.Admin/
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: Eshva.Hodgepodge.Polls/modules/Eshva.Polls.Admin/Dockerfile
       args:
         - configuration=Debug
   polls-configuration-service:
     container_name: polls-configuration-service
     image: polls-configuration-service:latest
     build:
-      context: ./Eshva.Polls.Configuration/
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: Eshva.Hodgepodge.Polls/modules/Eshva.Polls.Configuration/Dockerfile
       args:
         - configuration=Debug
   polls-client-bff:
     container_name: polls-client-bff
     image: polls-client-bff:latest
     build:
-      context: ./Eshva.Polls.Client/
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: Eshva.Hodgepodge.Polls/modules/Eshva.Polls.Client/Dockerfile
       args:
         - configuration=Debug
   polls-poll-results-service:
     container_name: polls-poll-results-service
     image: polls-poll-results-service:latest
     build:
-      context: ./Eshva.Polls.PollResults/
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: Eshva.Hodgepodge.Polls/modules/Eshva.Polls.PollResults/Dockerfile
       args:
         - configuration=Debug
