@@ -31,9 +31,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{8C8694
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Hodgepodge", "..\..\sources\Eshva.Hodgepodge\Eshva.Hodgepodge.csproj", "{F22CC619-4E53-4DEF-8B13-1ECB62FFFE41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshva.Common.UnitTesting", "..\Eshva.Common.UnitTesting\Eshva.Common.UnitTesting.csproj", "{54FAFA13-B652-4DCB-8ADE-AEEEC8861B2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Common.UnitTesting", "..\Eshva.Common.UnitTesting\Eshva.Common.UnitTesting.csproj", "{54FAFA13-B652-4DCB-8ADE-AEEEC8861B2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshva.Polls.Configuration.Domain", "modules\Eshva.Polls.Configuration\Eshva.Polls.Configuration.Domain\Eshva.Polls.Configuration.Domain.csproj", "{519D3188-1FBB-4DB8-BFDF-8ECA791C8915}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Polls.Configuration.Domain", "modules\Eshva.Polls.Configuration\Eshva.Polls.Configuration.Domain\Eshva.Polls.Configuration.Domain.csproj", "{519D3188-1FBB-4DB8-BFDF-8ECA791C8915}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshva.Common.WebApp", "..\Eshva.Common.WebApp\Eshva.Common.WebApp.csproj", "{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,10 @@ Global
 		{519D3188-1FBB-4DB8-BFDF-8ECA791C8915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{519D3188-1FBB-4DB8-BFDF-8ECA791C8915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{519D3188-1FBB-4DB8-BFDF-8ECA791C8915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{F22CC619-4E53-4DEF-8B13-1ECB62FFFE41} = {8C869422-0702-4CBB-8F08-A19F2D413EDC}
 		{54FAFA13-B652-4DCB-8ADE-AEEEC8861B2B} = {8C869422-0702-4CBB-8F08-A19F2D413EDC}
 		{519D3188-1FBB-4DB8-BFDF-8ECA791C8915} = {DDE9D0FB-1A6B-49A3-9A12-8B82AE082676}
+		{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C} = {8C869422-0702-4CBB-8F08-A19F2D413EDC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37F8AFF8-31AC-4BB4-BB5F-60E4FABCC064}
