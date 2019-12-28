@@ -1,36 +1,51 @@
 #region Usings
 
+using Eshva.Common.WebApp;
+using Eshva.Common.WebApp.ErrorHandling;
+using Eshva.Polls.Configuration.WebApp.Bootstrapping;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using SimpleInjector;
 
 #endregion
 
 
 namespace Eshva.Polls.Configuration.WebApp
 {
-    public class Startup
+    public sealed class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        [UsedImplicitly(ImplicitUseKindFlags.Access)]
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddApplicationPart(CommonWebAppAssembly.Reference); // TODO: Try to use AddMvcCore only.
+            services.AddSimpleInjector(
+                _container,
+                options =>
+                {
+                    options.AddAspNetCore()
+                           .AddControllerActivation();
+                    options.AddLogging();
+                });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        [UsedImplicitly]
+        public void Configure(IApplicationBuilder applicationBuilder, IWebHostEnvironment environment)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseRouting();
-
-            app.UseEndpoints(
-                endpoints => { endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); }); });
+            applicationBuilder.ConfigureDi(_container, Configuration);
+            applicationBuilder.UseMiddleware<FluentValidationExceptionHandlerMiddleware>();
+            applicationBuilder.UseRouting().UseEndpoints(endpoints => endpoints.MapControllers());
         }
+
+        private readonly Container _container = new Container();
     }
 }

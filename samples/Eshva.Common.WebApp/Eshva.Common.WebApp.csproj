@@ -8,4 +8,11 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.6.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="SimpleInjector" Version="4.8.1" />
+  </ItemGroup>
+
 </Project>
