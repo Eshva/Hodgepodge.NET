@@ -23,13 +23,15 @@ namespace Eshva.Common.WebApp.MediatR
         {
             var allAssemblies = assemblies.Union(new[] { typeof(IMediator).Assembly }).ToArray();
 
-            container.RegisterSingleton<IMediator, Mediator>();
+            container.Register<IMediator, Mediator>();
             container.Register(typeof(IRequestHandler<,>), allAssemblies);
 
             ContainerTools.RegisterTypesInAssemblies(container, typeof(INotificationHandler<>), allAssemblies);
             ContainerTools.RegisterTypesInAssemblies(container, typeof(IPipelineBehavior<,>), allAssemblies);
             ContainerTools.RegisterTypesInAssemblies(container, typeof(IRequestPreProcessor<>), allAssemblies);
             ContainerTools.RegisterTypesInAssemblies(container, typeof(IRequestPostProcessor<,>), allAssemblies);
+            ContainerTools.RegisterTypesInAssemblies(container, typeof(IRequestExceptionHandler<,,>), allAssemblies);
+            ContainerTools.RegisterTypesInAssemblies(container, typeof(IRequestExceptionAction<,>), allAssemblies);
 
             container.Register(() => new ServiceFactory(container.GetInstance), Lifestyle.Singleton);
         }
