@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Eshva.Common.UnitTesting;
 using Eshva.DockerCompose.Commands.BuildServices;
-using Eshva.DockerCompose.Commands.DownProject;
+using Eshva.DockerCompose.Commands.StopServices;
 using Eshva.DockerCompose.Commands.UpProject;
 using Eshva.Hodgepodge;
 using HandlebarsDotNet;
@@ -29,21 +29,28 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
 
         public HttpClient HttpClient { get; private set; }
 
+        public Uri PollsAdminBffUri { get; private set; }
+
+        public Uri ConfigurationServiceUri { get; private set; }
+
         protected override async Task SetupCollection()
         {
-            _fullDockerComposeFilePath = Path.Combine(CollectionFolder, Path.Combine(CollectionFolder, ProjectFileName));
             HttpClient = new HttpClient();
-            await BuildServices(BuildServicesDockerComposeFilePathVariableName);
+            _fullDockerComposeFilePath = Path.Combine(CollectionFolder, Path.Combine(CollectionFolder, ProjectFileName));
             await WriteProjectToTestCollectionFolder(
                 CreateRuntimeDockerComposeProject(await EmbeddedFiles.ReadAsString(ProjectTemplatePath)),
                 Path.Combine(CollectionFolder, ProjectFileName));
+            await BuildServices(BuildServicesDockerComposeFilePathVariableName);
             await UpDockerComposeFile();
         }
 
         protected override async Task TeardownCollection()
         {
             Redis?.Dispose();
-            await DownProjectCommand.WithFiles(_fullDockerComposeFilePath).Build().Execute();
+            await StopServicesCommand.WithFiles(_fullDockerComposeFilePath)
+                                     .AllServices()
+                                     .Build()
+                                     .Execute();
             HttpClient.Dispose();
         }
 
@@ -55,8 +62,8 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
                     new[]
                     {
                         WaitRedisReady(),
-                        WaitServiceReady(_pollsAdminBffUri, HttpClient, cancellationToken),
-                        WaitServiceReady(_configurationServiceUri, HttpClient, cancellationToken)
+                        WaitServiceReady(PollsAdminBffUri, HttpClient, cancellationToken),
+                        WaitServiceReady(ConfigurationServiceUri, HttpClient, cancellationToken)
                     },
                     cancellationToken);
             }
@@ -138,9 +145,9 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
         {
             var ports = FreeTcpPorts.GetPorts(3);
             _pollsAdminBffPort = ports[0];
-            _pollsAdminBffUri = new Uri($"http://localhost:{_pollsAdminBffPort}");
+            PollsAdminBffUri = new Uri($"http://localhost:{_pollsAdminBffPort}");
             _configurationServicePort = ports[1];
-            _configurationServiceUri = new Uri($"http://localhost:{_configurationServicePort}");
+            ConfigurationServiceUri = new Uri($"http://localhost:{_configurationServicePort}");
             _configurationServiceDbPort = ports[2];
         }
 
@@ -153,14 +160,15 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
 
         private Task BuildServices(string buildServicesDockerComposeFilePathVariableName)
         {
+            //return Task.CompletedTask;
             var buildServicesDockerComposeFilePath = Environment.GetEnvironmentVariable(buildServicesDockerComposeFilePathVariableName);
             return buildServicesDockerComposeFilePath == null
                 ? Task.CompletedTask
                 : BuildServicesCommand.WithFiles(buildServicesDockerComposeFilePath)
                                       .AllServices()
-                                      .RemoveIntermediateContainers()
+                                      //.RemoveIntermediateContainers()
                                       .Build()
-                                      .Execute();
+                                      .Execute(TimeSpan.FromMinutes(3));
         }
 
         private async Task UpDockerComposeFile()
@@ -173,8 +181,6 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
         private int _configurationServicePort;
         private int _configurationServiceDbPort;
         private int _pollsAdminBffPort;
-        private Uri _pollsAdminBffUri;
-        private Uri _configurationServiceUri = new Uri("http://polls-configuration-service");
 
         private const string BuildServicesDockerComposeFilePathVariableName = "EshvaPollsAdminTestsEndToEnd_BuildFilePath";
         private const string PollsAdminBffImage = "polls-admin-bff:latest";
