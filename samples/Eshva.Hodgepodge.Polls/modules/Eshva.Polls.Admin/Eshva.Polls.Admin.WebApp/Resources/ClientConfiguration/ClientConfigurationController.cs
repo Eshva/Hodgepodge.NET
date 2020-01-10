@@ -2,7 +2,7 @@
 
 using System.Threading.Tasks;
 using Eshva.Common.WebApp.MediatR;
-using Eshva.Polls.Admin.Application.ClientConfiguration;
+using Eshva.Polls.Admin.Application.SetClientConfiguration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

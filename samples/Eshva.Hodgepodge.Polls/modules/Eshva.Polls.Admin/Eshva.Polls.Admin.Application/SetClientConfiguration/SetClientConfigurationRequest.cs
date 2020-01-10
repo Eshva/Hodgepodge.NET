@@ -6,7 +6,7 @@ using MediatR;
 #endregion
 
 
-namespace Eshva.Polls.Admin.Application.ClientConfiguration
+namespace Eshva.Polls.Admin.Application.SetClientConfiguration
 {
     [UsedImplicitly]
     public sealed class SetClientConfigurationRequest : IRequest<Unit>

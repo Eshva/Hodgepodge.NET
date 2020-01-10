@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 #endregion
 
 
-namespace Eshva.Polls.Configuration.Domain
+namespace Eshva.Polls.Configuration.Contracts.Client
 {
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public sealed class ClientConfiguration

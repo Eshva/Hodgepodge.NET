@@ -2,7 +2,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Eshva.Polls.Admin.Application.ClientConfiguration;
+using Eshva.Polls.Admin.Application.SetClientConfiguration;
 using Eshva.Polls.Admin.WebApp.Resources.ClientConfiguration;
 using FluentAssertions;
 using MediatR;

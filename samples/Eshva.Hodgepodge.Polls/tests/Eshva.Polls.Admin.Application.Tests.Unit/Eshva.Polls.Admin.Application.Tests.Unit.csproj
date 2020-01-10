@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Eshva.Common.UnitTesting\Eshva.Common.UnitTesting.csproj" />
     <ProjectReference Include="..\..\modules\Eshva.Polls.Admin\Eshva.Polls.Admin.Application\Eshva.Polls.Admin.Application.csproj" />
+    <ProjectReference Include="..\..\common\Eshva.Polls.Configuration.Contracts\Eshva.Polls.Configuration.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
