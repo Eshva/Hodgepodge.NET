@@ -4,6 +4,7 @@ using Eshva.Common.WebApp;
 using Eshva.Common.WebApp.ErrorHandling;
 using Eshva.Common.WebApp.MediatR;
 using Eshva.Common.WebApp.Readiness;
+using Eshva.Polls.Admin.Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using SimpleInjector;
@@ -27,6 +28,7 @@ namespace Eshva.Polls.Admin.WebApp.Bootstrapping
             var assemblies = new[]
                              {
                                  PollsAdminWebAppAssembly.Reference,
+                                 PollsAdminApplicationAssembly.Reference,
                                  CommonWebAppAssembly.Reference
                              };
             container.AddMediatR(assemblies);

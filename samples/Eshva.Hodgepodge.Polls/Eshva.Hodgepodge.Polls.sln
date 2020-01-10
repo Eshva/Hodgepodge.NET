@@ -35,7 +35,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Common.UnitTesting", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Polls.Configuration.Domain", "modules\Eshva.Polls.Configuration\Eshva.Polls.Configuration.Domain\Eshva.Polls.Configuration.Domain.csproj", "{519D3188-1FBB-4DB8-BFDF-8ECA791C8915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshva.Common.WebApp", "..\Eshva.Common.WebApp\Eshva.Common.WebApp.csproj", "{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Common.WebApp", "..\Eshva.Common.WebApp\Eshva.Common.WebApp.csproj", "{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshva.Polls.Admin.Application", "modules\Eshva.Polls.Admin\Eshva.Polls.Admin.Application\Eshva.Polls.Admin.Application.csproj", "{1900DBB5-9912-48CF-A5A3-57BD42F3037E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Polls.Admin.Application.Tests.Unit", "tests\Eshva.Polls.Admin.Application.Tests.Unit\Eshva.Polls.Admin.Application.Tests.Unit.csproj", "{58A1A573-4A7B-4482-A8DE-28A53CE21FC7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Polls.Admin.WebApp.Tests.Unit", "tests\Eshva.Polls.Admin.WebApp.Tests.Unit\Eshva.Polls.Admin.WebApp.Tests.Unit.csproj", "{FF07A8D0-2376-405E-BA82-24EA92175829}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +89,18 @@ Global
 		{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1900DBB5-9912-48CF-A5A3-57BD42F3037E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1900DBB5-9912-48CF-A5A3-57BD42F3037E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1900DBB5-9912-48CF-A5A3-57BD42F3037E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1900DBB5-9912-48CF-A5A3-57BD42F3037E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58A1A573-4A7B-4482-A8DE-28A53CE21FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58A1A573-4A7B-4482-A8DE-28A53CE21FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58A1A573-4A7B-4482-A8DE-28A53CE21FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58A1A573-4A7B-4482-A8DE-28A53CE21FC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF07A8D0-2376-405E-BA82-24EA92175829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF07A8D0-2376-405E-BA82-24EA92175829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF07A8D0-2376-405E-BA82-24EA92175829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF07A8D0-2376-405E-BA82-24EA92175829}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +120,9 @@ Global
 		{54FAFA13-B652-4DCB-8ADE-AEEEC8861B2B} = {8C869422-0702-4CBB-8F08-A19F2D413EDC}
 		{519D3188-1FBB-4DB8-BFDF-8ECA791C8915} = {DDE9D0FB-1A6B-49A3-9A12-8B82AE082676}
 		{E39DC6EC-AF4D-4C8B-8907-5A68C42AE70C} = {8C869422-0702-4CBB-8F08-A19F2D413EDC}
+		{1900DBB5-9912-48CF-A5A3-57BD42F3037E} = {05905222-B0FA-4408-85C6-56EDC34C9E5A}
+		{58A1A573-4A7B-4482-A8DE-28A53CE21FC7} = {D1F97912-F4D2-4EE6-A807-A36459CC945B}
+		{FF07A8D0-2376-405E-BA82-24EA92175829} = {D1F97912-F4D2-4EE6-A807-A36459CC945B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37F8AFF8-31AC-4BB4-BB5F-60E4FABCC064}

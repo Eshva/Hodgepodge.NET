@@ -27,14 +27,16 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.Features
         }
 
         [Fact]
-        public async Task ShouldSetClientConfiguration()
+        public async Task NormalScenario()
         {
-            var requestUri = new Uri(_pollsAdminBffUri, "client");
             var expected = new Random().Next();
+            // When send a new configuration object through Admin BFF REST-method.
             var clientConfiguration = new ClientConfig { ConfigurationRefreshIntervalSeconds = expected };
             var content = new StringContent(JsonSerializer.Serialize(clientConfiguration), Encoding.UTF8, MediaTypeNames.Application.Json);
+            var requestUri = new Uri(_pollsAdminBffUri, "client");
             await _httpClient.PostAsync(requestUri, content);
 
+            // Should read the same configuration from Configuration Database.
             var value = JsonSerializer.Deserialize<ClientConfig>(await _database.StringGetAsync("config:client"));
             value.ConfigurationRefreshIntervalSeconds.Should().Be(expected);
         }
