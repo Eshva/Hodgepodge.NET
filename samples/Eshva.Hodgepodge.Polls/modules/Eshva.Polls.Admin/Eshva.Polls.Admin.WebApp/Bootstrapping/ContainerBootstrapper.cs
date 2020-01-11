@@ -5,6 +5,7 @@ using Eshva.Common.WebApp.ErrorHandling;
 using Eshva.Common.WebApp.MediatR;
 using Eshva.Common.WebApp.Readiness;
 using Eshva.Polls.Admin.Application;
+using Eshva.Polls.Admin.WebApp.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using SimpleInjector;
@@ -25,6 +26,7 @@ namespace Eshva.Polls.Admin.WebApp.Bootstrapping
 
         private static void SetupContainer(Container container, IConfiguration configuration)
         {
+            // TODO: Don't use the common list of assemblies. Separate into different lists.
             var assemblies = new[]
                              {
                                  PollsAdminWebAppAssembly.Reference,
@@ -35,11 +37,6 @@ namespace Eshva.Polls.Admin.WebApp.Bootstrapping
             container.AddApplicationConfiguration(configuration);
             container.AddFluentValidation(assemblies);
             container.AddDefaultReadinessTester();
-        }
-
-        private static void AddApplicationConfiguration(this Container container, IConfiguration configuration)
-        {
-            // TODO: Add here registration of application configuration sections.
         }
     }
 }

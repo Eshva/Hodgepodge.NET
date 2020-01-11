@@ -8,7 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Eshva.Common.UnitTesting;
 using Eshva.DockerCompose.Commands.BuildServices;
-using Eshva.DockerCompose.Commands.StopServices;
+using Eshva.DockerCompose.Commands.DownProject;
+using Eshva.DockerCompose.Commands.Logs;
 using Eshva.DockerCompose.Commands.UpProject;
 using Eshva.Hodgepodge;
 using HandlebarsDotNet;
@@ -47,10 +48,11 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
         protected override async Task TeardownCollection()
         {
             Redis?.Dispose();
-            await StopServicesCommand.WithFiles(_fullDockerComposeFilePath)
-                                     .AllServices()
-                                     .Build()
-                                     .Execute();
+            await SaveAllServicesLogs();
+
+            await DownProjectCommand.WithFiles(_fullDockerComposeFilePath)
+                                    .Build()
+                                    .Execute();
             HttpClient.Dispose();
         }
 
@@ -86,6 +88,23 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
             Redis = ConnectionMultiplexer.Connect(options);
             Server = Redis.GetServer(ServerHost, _configurationServiceDbPort);
             return Task.CompletedTask;
+        }
+
+        private async Task SaveAllServicesLogs()
+        {
+            var logsCommand = LogsCommand.WithFiles(_fullDockerComposeFilePath)
+                                         .FromAllServices()
+                                         .Build();
+            await logsCommand.Execute();
+
+            var logsFolder = Path.Combine(Path.GetTempPath(), "hodgepodge", "configs");
+            var timestamp = DateTime.Now.ToString("s").Replace(":", "-");
+            await File.WriteAllTextAsync(
+                Path.Combine(logsFolder, $"{timestamp}-all-services-stdout.log"),
+                logsCommand.StandardOutput.ToString());
+            await File.WriteAllTextAsync(
+                Path.Combine(logsFolder, $"{timestamp}-all-services-stderr.log"),
+                logsCommand.StandardError.ToString());
         }
 
         private async Task WaitServiceReady(Uri serviceUri, HttpClient httpClient, CancellationToken cancellationToken)
@@ -166,14 +185,17 @@ namespace Eshva.Polls.Admin.Tests.EndToEnd.TestHelpers
                 ? Task.CompletedTask
                 : BuildServicesCommand.WithFiles(buildServicesDockerComposeFilePath)
                                       .AllServices()
-                                      //.RemoveIntermediateContainers()
+                                      .RemoveIntermediateContainers()
                                       .Build()
                                       .Execute(TimeSpan.FromMinutes(3));
         }
 
         private async Task UpDockerComposeFile()
         {
-            var upProjectCommand = UpProjectCommand.WithFiles(_fullDockerComposeFilePath).Build();
+            var upProjectCommand = UpProjectCommand.WithFiles(_fullDockerComposeFilePath)
+                                                   .ForceRecreateContainers()
+                                                   .RecreateDependedContainers()
+                                                   .Build();
             await upProjectCommand.Execute(TimeSpan.FromSeconds(20));
         }
 

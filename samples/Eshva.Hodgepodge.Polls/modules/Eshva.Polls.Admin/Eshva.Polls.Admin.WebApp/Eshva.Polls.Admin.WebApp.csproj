@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Eshva.Common.WebApp\Eshva.Common.WebApp.csproj" />
+    <ProjectReference Include="..\..\..\common\Eshva.Polls.Configuration.WebService\Eshva.Polls.Configuration.WebService.csproj" />
     <ProjectReference Include="..\Eshva.Polls.Admin.Application\Eshva.Polls.Admin.Application.csproj" />
   </ItemGroup>
 

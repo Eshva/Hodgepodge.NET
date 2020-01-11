@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Polls.Admin.WebApp.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshva.Polls.Configuration.Contracts", "common\Eshva.Polls.Configuration.Contracts\Eshva.Polls.Configuration.Contracts.csproj", "{3F759FFA-1DE1-4A3B-89F2-4CFF7D3F49B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eshva.Polls.Configuration.WebService", "common\Eshva.Polls.Configuration.WebService\Eshva.Polls.Configuration.WebService.csproj", "{24D5514A-B19E-4D4C-8FD3-ABA36F84A992}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{3F759FFA-1DE1-4A3B-89F2-4CFF7D3F49B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F759FFA-1DE1-4A3B-89F2-4CFF7D3F49B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F759FFA-1DE1-4A3B-89F2-4CFF7D3F49B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D5514A-B19E-4D4C-8FD3-ABA36F84A992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D5514A-B19E-4D4C-8FD3-ABA36F84A992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D5514A-B19E-4D4C-8FD3-ABA36F84A992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D5514A-B19E-4D4C-8FD3-ABA36F84A992}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +136,7 @@ Global
 		{58A1A573-4A7B-4482-A8DE-28A53CE21FC7} = {D1F97912-F4D2-4EE6-A807-A36459CC945B}
 		{FF07A8D0-2376-405E-BA82-24EA92175829} = {D1F97912-F4D2-4EE6-A807-A36459CC945B}
 		{3F759FFA-1DE1-4A3B-89F2-4CFF7D3F49B6} = {8C869422-0702-4CBB-8F08-A19F2D413EDC}
+		{24D5514A-B19E-4D4C-8FD3-ABA36F84A992} = {8C869422-0702-4CBB-8F08-A19F2D413EDC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37F8AFF8-31AC-4BB4-BB5F-60E4FABCC064}

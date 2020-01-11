@@ -6,6 +6,7 @@ services:
     restart: on-failure
     environment:
       - ASPNETCORE_URLS=http://0.0.0.0:80
+      - POLLS_WebServices__ProductConfigs__BaseUri=http://polls-configuration-service
     ports:
       - {{pollsAdminBffPort}}:80
     depends_on:

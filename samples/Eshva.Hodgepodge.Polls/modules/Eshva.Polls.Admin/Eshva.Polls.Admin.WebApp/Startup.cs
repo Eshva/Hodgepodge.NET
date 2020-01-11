@@ -3,6 +3,7 @@
 using Eshva.Common.WebApp;
 using Eshva.Common.WebApp.ErrorHandling;
 using Eshva.Polls.Admin.WebApp.Bootstrapping;
+using Eshva.Polls.Admin.WebApp.Configuration;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace Eshva.Polls.Admin.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddApplicationPart(CommonWebAppAssembly.Reference); // TODO: Try to use AddMvcCore only.
+            services.AddWebServices(_container);
             services.AddSimpleInjector(
                 _container,
                 options =>

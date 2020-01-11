@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Eshva.Common.WebApp\Eshva.Common.WebApp.csproj" />
+    <ProjectReference Include="..\Eshva.Polls.Configuration.Contracts\Eshva.Polls.Configuration.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
